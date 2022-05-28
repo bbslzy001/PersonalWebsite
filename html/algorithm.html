@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Algorithm</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../css/bootstrap.css">
+		<script src="../js/bootstrap.bundle.js"></script>
+		<script src="../js/jquery-3.6.0.min.js"></script>
+		<style>
+			*{margin:0; padding:0;}
+			*{font-family: "微软雅黑";}
+			body
+			{
+				background: url(../img/content-background2.jpg);
+				background-size: 100%;
+				background-repeat: repeat;
+			}
+			.naxbar-search-width
+			{
+				width: 400px;
+			}
+			.naxbar-search-button-width
+			{
+				width: 100px;
+			}
+			.item-font
+			{
+				font-size: 20px;
+				border-top: 2px solid #e7e3f8;
+				border-bottom: 2px solid #e7e3f8;
+			}
+			.item-select a:hover
+			{
+				border-bottom: 2px solid #00a4ff;
+			}
+			.active
+			{
+				font-weight: bold;
+			}
+			.top-box
+			{
+				width: 100%;
+			}
+			.empty-box
+			{
+				width: 100%;
+				height: 60px;
+			}
+			.content-background
+			{
+				width: 100%;
+				margin:0 auto;
+				padding: 40px 0;
+			}
+			.content-box
+			{
+				width: 75%;
+				height: 100%;
+				margin: 0 auto;
+				border: 6px outset lightseagreen;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="top-box">
+			<div class="empty-box"></div>
+			<nav class="navbar navbar-expand-lg navbar-light bg-gradient fixed-top" style="background-color: #e7e3f8;">
+				<div class="container-fluid">
+					<a class="navbar-brand">
+						<img src="../img/icon01.png" alt="慵懒小窝图标" width="100" height="60">
+						<img src="../img/icon02.png" alt="慵懒小窝艺术字" width="145" height="60">
+					</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbar">
+						<ul class="navbar-nav me-auto my-2">
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="../index.html">Home</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font active ms-4" href="algorithm.html">Algorithm</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="java.html">Java</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="mysql.html">Mysql</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="game.html">Game</a></li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle item-font ms-4" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">其它</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registerModal">注册</a></li>
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">登录</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoModal">作者信息</a></li>
+								</ul>
+							</li>
+						</ul>
+						<form class="d-flex">
+							<input class="form-control me-2 naxbar-search-width" type="search" placeholder="请输入你想要搜索的内容" />
+							<button class="btn btn-outline-primary naxbar-search-button-width" type="submit">搜索</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+		</div>
+		<script>
+			$(".empty-box").height($(".navbar").outerHeight());
+		</script>
+		<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">注册</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row mb-3">
+								<label for="inputName" class="col-3 col-form-label">用户名</label>
+								<div class="col-9 align-self-center">
+									<input type="text" maxlength="20" class="form-control" id="inputName" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputEmail" class="col-3 col-form-label">邮箱地址</label>
+								<div class="col-9 align-self-center">
+									<input type="email" class="form-control" id="inputEmail" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputPassword" class="col-3 col-form-label">密码</label>
+								<div class="col-9 align-self-center">
+									<input type="password" class="form-control" id="inputPassword" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputPasswordSecond" class="col-3 col-form-label">确认密码</label>
+								<div class="col-9 align-self-center">
+									<input type="password" class="form-control" id="inputPasswordSecond" />
+								</div>
+							</div>
+							<fieldset class="row">
+								<legend class="col-form-label col-3">性别</legend>
+								<div class="col-9 align-self-center">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+										<label class="form-check-label" for="inlineRadio1">男</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+										<label class="form-check-label" for="inlineRadio2">女</label>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="reset" class="btn btn-secondary">重置</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">注册</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">登录</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row mb-3">
+								<label for="inputEmail" class="col-3 col-form-label">邮箱地址</label>
+								<div class="col-9 align-self-center">
+									<input type="email" class="form-control" id="inputEmail" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputPassword" class="col-3 col-form-label">密码</label>
+								<div class="col-9 align-self-center">
+									<input type="password" class="form-control" id="inputPassword" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="reset" class="btn btn-secondary">重置</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">登录</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">个人信息</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<p>姓名：李兆洋</p>
+						<p>学号：2125050453</p>
+						<p>学院：软件学院</p>
+						<p>专业：软件工程</p>
+						<p>班级：010</p>
+						<p>网站主题：笔记分享网站</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content-background">
+			<div class="content-box">
+				<table class="table table-hover table-success mb-0">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Title</th>
+							<th scope="col">SubmitTime</th>
+							<th scope="col">Author</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4" class="text-end">最后编辑日期：2022.05.27</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+		<script>
+			/* 利用数组模拟 */
+			var arr = new Array
+			(
+				new Array('快速排序','../resource/algorithm/快速排序-不稳定 1135e0765ebe4945a35bddd9522a5f6e.html'),
+				new Array('归并排序','../resource/algorithm/归并排序-稳定 9d77d9baf1c849e19b816336bebad48d.html'),
+				new Array('二分查找','../resource/algorithm/二分查找 2d622a9c62044cfd828aa0d85b6a6bc7.html'),
+				new Array('高精度加法','../resource/algorithm/高精度加法 332949b2a7a740f5b770e58759b2ba78.html'),
+				new Array('高精度减法','../resource/algorithm/高精度减法 19318a471aec45f88dbabbc676918ac4.html'),
+				new Array('高精度乘法','../resource/algorithm/高精度乘法 3dfc8973fa7e4656921955077b04cf64.html'),
+				new Array('高精度除法','../resource/algorithm/高进度除法 39004398604e4e99ae1e6bd048674726.html'),
+				new Array('前缀和','../resource/algorithm/前缀和 75025d6364a74b0aaa549a8886d226a4.html'),
+				new Array('差分','../resource/algorithm/差分 f5fe85ff01fc42918bd9f47bbf5667d4.html'),
+				new Array('位运算','../resource/algorithm/位运算 23fd186545224a3ebfb610880a432d0b.html'),
+				new Array('离散化','../resource/algorithm/离散化 311f8771b4bf456593c5c3ec6f757c4c.html'),
+				new Array('区间合并','../resource/algorithm/区间合并 e53bdafd343a4340aae1c20b78fa9084.html'),
+				new Array('双链表','../resource/algorithm/双链表 7e61ae5087154c82b86f2227e95132b3.html'),
+				new Array('模拟栈','../resource/algorithm/模拟栈 49170a752883483fb4b16b6d7854997e.html'),
+				new Array('单调队列','../resource/algorithm/单调队列 6cda9bdeb23043eb8b7f7f8d4e12aeab.html'),
+				new Array('KMP','../resource/algorithm/KMP 87bf885180a9473ab2a3a1e1cacc903d.html'),
+				new Array('Trie','../resource/algorithm/Trie 6cb44e4563d1434cb4ed92a21db34208.html'),
+				new Array('并查集','../resource/algorithm/并查集 98aff3ee3e624ca4a77592887d2504be.html')
+			);
+			
+			/* 查找 table 中的 tbody 元素 */
+			var table = document.querySelector('tbody');
+			
+			/* 动态创建行和单元格 */
+			for(var i = 0; i < arr.length; ++i)
+			{
+				var tr = table.insertRow();  /* 动态创建行 */
+				var str = "location.href = " + '\'' + arr[i][1] + '\'';
+				tr.setAttribute('onclick',str);
+				var temp_arr = new Array(String(i + 1),arr[i][0],'2022.05.27','bbslzy');
+				for(var j = 0; j < 4; ++j)
+				{
+					var cell = tr.insertCell(j);  /* 动态创建单元格，创建该行下标为 j 的单元格 */
+					cell.innerHTML = temp_arr[j];
+				}
+			}
+		</script>
+	</body>
+</html>

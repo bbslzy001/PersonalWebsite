@@ -1,0 +1,1382 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>DQL常用命令</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="21a1ffdf-e609-4f1e-8371-9b2b4e6d8e0b" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">▪️</span></div><h1 class="page-title">DQL常用命令</h1></header><div class="page-body"><h3 id="6d99368c-4790-4723-af20-1bdbe3d4a34d" class="">基本格式</h3><ul id="b6583d4d-f1b0-46a2-ad7a-8eefc278e4be" class="bulleted-list"><li style="list-style-type:disc">select [列名] from [表名] <mark class="highlight-blue">[列别名] / ‘[列别名]’ / “[列别名]” / as [列别名]</mark> where [条件表达式] <mark class="highlight-blue">group by [列值] having [条件表达式] order by [ASC/DESC]</mark>;<blockquote id="b372a5bb-bb60-419e-a8f1-9472632c9462" class="">SELECT：指定要显示的属性列
+select的目标列表表达式：算数表达式、字符串常量、函数、列别名……</blockquote><blockquote id="1bcbf490-22f3-4856-af82-51493c7a2698" class="">FROM：指定查询对象(基本表或视图)</blockquote><blockquote id="86daebb2-eb86-4a2d-ba86-52ca7572d464" class="">WHERE：指定查询条件</blockquote><blockquote id="5a7688b6-a031-49fa-a6d4-7ea660741513" class="">GROUPBY：对查询结果按指定列的值分组，该属性列值相等的元组为一个组。通常会在每组中作用集函数</blockquote><blockquote id="2226bfc7-6617-427b-8663-214e61b720fe" class="">HAVING：筛选出只有满足指定条件的组</blockquote><blockquote id="f7c927c6-3e51-4294-b9d0-585f7b1bc0c8" class="">ORDER BY：对查询结果表按指定列值的升序或降序排序</blockquote></li></ul><h3 id="9e833242-921c-4436-acc1-59504cd0ef1e" class="">单表查询</h3><ul id="207a52ce-147e-4d75-9bf8-ee4b78a20432" class="toggle"><li><details open=""><summary>添加别名</summary><ul id="861d30be-8d59-4f49-aead-0f4c429732b0" class="toggle"><li><details open=""><summary>不使用引号</summary><pre id="33752637-7011-4300-a1ef-f0d8456883c4" class="code"><code>mysql&gt; select Sname 姓名 from s;
++--------+
+| 姓名   |
++--------+
+| 李勇   |
+| 刘晨   |
+| 王敏   |
+| 张立   |
++--------+
+4 rows in set (0.01 sec)</code></pre></details></li></ul><ul id="bfd3664c-7841-4842-8923-dc0d6de944a3" class="toggle"><li><details open=""><summary>使用单引号</summary><pre id="b9252976-0c61-4ced-bb24-4da328424266" class="code"><code>mysql&gt; select Sname &#x27;姓名&#x27; from s;
++--------+
+| 姓名   |
++--------+
+| 李勇   |
+| 刘晨   |
+| 王敏   |
+| 张立   |
++--------+
+4 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="c1ea5b2c-6270-4abd-b796-acddf5f69cd3" class="toggle"><li><details open=""><summary>使用双引号</summary><pre id="f92844e9-be6f-403c-98b7-09392a2758ec" class="code"><code>mysql&gt; select Sname &quot;姓名&quot; from s; 
++--------+
+| 姓名   |
++--------+
+| 李勇   |
+| 刘晨   |
+| 王敏   |
+| 张立   |
++--------+
+4 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="fb3d7b96-b07a-4e75-ac8e-a9d12bce85c4" class="toggle"><li><details open=""><summary>使用as</summary><pre id="bdbf3218-fcce-4cc5-90e0-361f72dcb4e9" class="code"><code>mysql&gt; select Sname as &quot;姓名&quot;,Sage as &#x27;年龄&#x27;,Sdept as 系 from s;
++--------+--------+------+
+| 姓名   | 年龄   | 系   |
++--------+--------+------+
+| 李勇   |     20 | CS   |
+| 刘晨   |     19 | CS   |
+| 王敏   |     18 | MA   |
+| 张立   |     19 | IS   |
++--------+--------+------+
+4 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="8ad9759c-72ed-456e-8034-d47e038dca4b" class="toggle"><li><details open=""><summary>注意</summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7f78eff2-3bb7-48f1-ba65-b93eef948779"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">别名当中具有特殊符号时(如空格)，别名必须用引号引起来</div></figure></details></li></ul></details></li></ul><ul id="b9ac1c9e-705d-4e23-ae58-a9172afe8f6a" class="toggle"><li><details open=""><summary>在字段值前后添加字符串</summary><ul id="862267b0-c182-4f0d-8cd0-076fafff3b8e" class="toggle"><li><details open=""><summary>使用concat()</summary><ul id="7a80ef91-844f-4b89-a0f1-3a276bd439f4" class="bulleted-list"><li style="list-style-type:disc">字符串必须用单引号引起来，且会将数值转换成字符串进行输出</li></ul></details></li></ul><ul id="88cce53b-f2d3-4ff1-9ee4-2c55dc30e20f" class="toggle"><li><details open=""><summary>使用concat_ws()</summary><ul id="05b80220-9e2e-401f-b88b-a818fd27a730" class="bulleted-list"><li style="list-style-type:disc">字符串必须用单引号引起来，且会将数值转换成字符串进行输出</li></ul><ul id="e79d9ec6-82e5-4cdc-bdd0-934c9b698d4c" class="bulleted-list"><li style="list-style-type:disc">第一个参数是其它参数的分隔符，剩下的参数则为待拼接的字符串值。分隔符可以是一个字符串，也可以是其它参数。如果分隔符为 NULL，则结果为 NULL。函数会忽略任何分隔符参数后的 NULL 值。</li></ul></details></li></ul><ul id="c8bc1cf7-ebd3-4b8f-8b41-1d18669f7817" class="toggle"><li><details open=""><summary>实例</summary><pre id="dbaf3432-9db8-4a29-a9bf-58ba3e673ae0" class="code"><code>mysql&gt; select Sname &#x27;姓名&#x27;,concat(2022-Sage,&#x27;年&#x27;) &#x27;出生年份&#x27;,concat(Sage,&#x27;岁&#x27;) 年龄,concat_ws(&#x27; &#x27;,&#x27;就读于&#x27;,Sdept,&#x27;系&#x27;) 系名 from s;
++--------+--------------+--------+------------------+
+| 姓名   | 出生年份     | 年龄   | 系名             |
++--------+--------------+--------+------------------+
+| 李勇   | 2002年       | 20岁   | 就读于 CS 系     |
+| 刘晨   | 2003年       | 19岁   | 就读于 CS 系     |
+| 王敏   | 2004年       | 18岁   | 就读于 MA 系     |
+| 张立   | 2003年       | 19岁   | 就读于 IS 系     |
++--------+--------------+--------+------------------+
+4 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="c31a97e7-60b3-44b4-b598-a74f900f0af0" class="toggle"><li><details open=""><summary>注意</summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ef376ac0-0a97-4157-b66e-1e0a15994beb"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">在mysql中不能直接使用+来拼接字符串</div></figure></details></li></ul></details></li></ul><ul id="cde8f1f1-977d-4af7-876d-9bbebf06fce2" class="toggle"><li><details open=""><summary>消除取值重复的行</summary><ul id="7e3df20b-8a66-4869-9a07-457285efc198" class="toggle"><li><details open=""><summary>all</summary><pre id="cf1c925b-45c8-43f6-a6eb-9644e5617f3c" class="code"><code>#此处all可以省略
+mysql&gt; select all Sno from sc;
++-----------+
+| Sno       |
++-----------+
+| 201215121 |
+| 201215121 |
+| 201215122 |
+| 201215121 |
+| 201215122 |
++-----------+
+5 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="93084930-7d2c-4b5b-808f-92be9bcbaf0a" class="toggle"><li><details open=""><summary>distinct</summary><pre id="53572af7-853b-4b7e-822c-cddae93004e7" class="code"><code>mysql&gt; select distinct Sno from sc;
++-----------+
+| Sno       |
++-----------+
+| 201215121 |
+| 201215122 |
++-----------+
+2 rows in set (0.00 sec)</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8c132353-0a74-4439-adab-ed7828c83603"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">DISTINCT短语的作用范围是所有目标列</div></figure><pre id="ceb86433-b250-4c3a-a78d-91c4bfb8430e" class="code"><code>#将Cno和Grade看作一个元组，只有当两个元组相同时才算作重复
+mysql&gt; select distinct Cno,Grade from sc;
++-----+-------+
+| Cno | Grade |
++-----+-------+
+| 1   |    92 |
+| 2   |    85 |
+| 3   |    88 |
+| 2   |    90 |
+| 3   |    80 |
++-----+-------+
+5 rows in set (0.00 sec)</code></pre></details></li></ul></details></li></ul><ul id="4b7cc658-fc4c-495b-923a-b86953bf59d6" class="toggle"><li><details open=""><summary>查询满足条件的元组</summary><ul id="0dff9c98-1575-4e82-88c4-8f99e408a6b9" class="toggle"><li><details open=""><summary>比较大小</summary><pre id="7bdeb144-a3c3-4ea5-a466-d1e2e2424bc6" class="code"><code>mysql&gt; select Sname,Sage from s where Sage&lt;20;
++--------+------+
+| Sname  | Sage |
++--------+------+
+| 刘晨   |   19 |
+| 王敏   |   18 |
+| 张立   |   19 |
++--------+------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select Sname,Sage from s where not Sage&gt;=20;   
++--------+------+
+| Sname  | Sage |
++--------+------+
+| 刘晨   |   19 |
+| 王敏   |   18 |
+| 张立   |   19 |
++--------+------+
+3 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="c3ad86e9-bd31-47e1-8bb8-471f2c14fb26" class="toggle"><li><details open=""><summary>确定范围</summary><blockquote id="ad40d9c1-9979-411b-8477-ac2cb883798d" class="">between ... and ...
+not between ... and ...</blockquote><pre id="0de2d082-6637-4137-89b7-ee384d0a4516" class="code"><code>mysql&gt; select Sname,Sdept,Sage from s where Sage between 20 and 23;
++--------+-------+------+
+| Sname  | Sdept | Sage |
++--------+-------+------+
+| 李勇   | CS    |   20 |
++--------+-------+------+
+1 row in set (0.00 sec)
+
+mysql&gt; select Sname,Sdept,Sage from s where Sage not between 20 and 23; 
++--------+-------+------+
+| Sname  | Sdept | Sage |
++--------+-------+------+
+| 刘晨   | CS    |   19 |
+| 王敏   | MA    |   18 |
+| 张立   | IS    |   19 |
++--------+-------+------+
+3 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="525d7327-762b-4c56-8ef0-ff56724e1fa0" class="toggle"><li><details open=""><summary>确定集合</summary><blockquote id="3d16b437-20f8-4bdd-923e-acaff515d792" class="">in
+not in</blockquote><pre id="ba4316f7-08bc-4e89-b42b-718b510a7351" class="code"><code>mysql&gt; select Sname,Ssex from s where Sdept in(&#x27;IS&#x27;,&#x27;CS&#x27;);
++--------+------+
+| Sname  | Ssex |
++--------+------+
+| 李勇   | 男   |
+| 刘晨   | 女   |
+| 张立   | 男   |
++--------+------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select Sname,Ssex from s where Sdept not in(&#x27;IS&#x27;,&#x27;CS&#x27;);
++--------+------+
+| Sname  | Ssex |
++--------+------+
+| 王敏   | 女   |
++--------+------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="44f8e269-ea74-4c6e-9081-70842d742623" class="toggle"><li><details open=""><summary>字符串匹配</summary><blockquote id="94e7a64f-a6fc-4e1e-90c5-6412b5aab315" class="">like（仅当匹配串为完整字符串时，可以用=代替）
+not like（仅当匹配串为完整字符串时，可以用!= 或 &lt;&gt; 代替）</blockquote><pre id="4543585e-b97b-47de-aacd-49ce191de5bc" class="code"><code>mysql&gt; select * from s where Sno like &#x27;201215121&#x27;;
++-----------+--------+------+------+-------+--------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth |
++-----------+--------+------+------+-------+--------+
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   |
++-----------+--------+------+------+-------+--------+
+1 row in set (0.00 sec)
+
+mysql&gt; select *from s where Sno =&#x27;201215121&#x27;;
++-----------+--------+------+------+-------+--------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth |
++-----------+--------+------+------+-------+--------+
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   |
++-----------+--------+------+------+-------+--------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="cd43fa87-848c-4b87-9e73-a8ed8017f1fb" class="toggle"><li><details open=""><summary>通配符</summary><blockquote id="aba018cf-b4e5-4c1b-9412-ff5a6973731f" class="">%：任意长度字符串（可以为0个字符）
+_：单个字符
+当数据库字符集为ASCII时，一个汉字需要两个_
+当数据库字符集为GBK时，一个汉字需要一个_</blockquote><pre id="188730dc-3408-4a28-95e9-ce9b118d4aab" class="code"><code>mysql&gt; select Sname,Sno,Ssex from s where Sno not like &#x27;%15122&#x27;;
++--------+-----------+------+
+| Sname  | Sno       | Ssex |
++--------+-----------+------+
+| 李勇   | 201215121 | 男   |
+| 王敏   | 201215123 | 女   |
+| 张立   | 201215125 | 男   |
++--------+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select Sname,Sno,Ssex from s where Sno like &#x27;%15122&#x27;;     
++--------+-----------+------+
+| Sname  | Sno       | Ssex |
++--------+-----------+------+
+| 刘晨   | 201215122 | 女   |
++--------+-----------+------+
+1 row in set (0.00 sec)
+
+mysql&gt; select Sname,Sno,Ssex from s where Sno like &#x27;________2&#x27;;
++--------+-----------+------+
+| Sname  | Sno       | Ssex |
++--------+-----------+------+
+| 刘晨   | 201215122 | 女   |
++--------+-----------+------+
+1 row in set (0.00 sec)
+
+mysql&gt; select Sname,Sno,Ssex from s where Sno like &#x27;_______2%&#x27;; 
++--------+-----------+------+
+| Sname  | Sno       | Ssex |
++--------+-----------+------+
+| 李勇   | 201215121 | 男   |
+| 刘晨   | 201215122 | 女   |
+| 王敏   | 201215123 | 女   |
+| 张立   | 201215125 | 男   |
++--------+-----------+------+
+4 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="6bdf1b5c-e0b5-43af-938f-8c696c91a4da" class="toggle"><li><details open=""><summary>escape短语</summary><blockquote id="bc046fc6-b9fe-43de-a4d2-0fa32d9929e5" class="">escape’[转码字符]’（在mysql中一般不使用\作为转码字符）</blockquote><pre id="5718a075-39e1-4fdd-b1b0-c4273777f878" class="code"><code>mysql&gt; select * from s;
++-----------+---------+------+------+-------+--------+
+| Sno       | Sname   | Ssex | Sage | Sdept | Sbirth |
++-----------+---------+------+------+-------+--------+
+| 201215121 | 李勇    | 男   |   20 | CS    | NULL   |
+| 201215122 | 刘晨    | 女   |   19 | CS    | NULL   |
+| 201215123 | 王敏    | 女   |   18 | MA    | NULL   |
+| 201215125 | 张立    | 男   |   19 | IS    | NULL   |
+| 201215126 | 李_勇   | 男   |   19 | CS    | NULL   |
++-----------+---------+------+------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql&gt; select * from s where Sname like &#x27;%#_勇%&#x27; escape&#x27;#&#x27;;
++-----------+---------+------+------+-------+--------+
+| Sno       | Sname   | Ssex | Sage | Sdept | Sbirth |
++-----------+---------+------+------+-------+--------+
+| 201215126 | 李_勇   | 男   |   19 | CS    | NULL   |
++-----------+---------+------+------+-------+--------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="5c2b354e-d53b-4aca-9786-069a7440fce1" class="toggle"><li><details open=""><summary>涉及空值的查询</summary><blockquote id="46914f50-6617-4f85-955c-26ad39ce2bab" class="">is null
+is not null</blockquote><pre id="e29e8876-5ffb-4afa-a767-77b422b7c420" class="code"><code>mysql&gt; select Sname from s where Sbirth is null; 
++---------+
+| Sname   |
++---------+
+| 李勇    |
+| 刘晨    |
+| 王敏    |
+| 张立    |
+| 李_勇   |
++---------+
+5 rows in set (0.00 sec)
+
+mysql&gt; select Sname from s where Sbirth is not null; 
+Empty set (0.00 sec)</code></pre></details></li></ul><ul id="2cf7c7b6-03ee-495b-929d-5dc3def67df5" class="toggle"><li><details open=""><summary>多重条件查询</summary><blockquote id="a1e108bf-1aff-4566-bd86-a8a2482b07d4" class="">and（优先级高于or，可以使用括号来确定优先级）
+or</blockquote><pre id="8c26a4c7-da00-4657-8aee-dd0535138ec8" class="code"><code>mysql&gt; select Sname from s where Sdept=&#x27;CS&#x27; and Sage&lt;20;
++---------+
+| Sname   |
++---------+
+| 刘晨    |
++---------+
+1 rows in set (0.00 sec)</code></pre></details></li></ul></details></li></ul><ul id="0c93338c-8302-4c3a-af45-c777ae90838f" class="toggle"><li><details open=""><summary>对查询结果进行排序</summary><ul id="6d892847-679b-47ea-93f0-b2dd165532e9" class="toggle"><li><details open=""><summary>升序</summary><blockquote id="fc5c7080-74b7-481f-ae95-7e2a8ae57b41" class="">ASC：升序（在mysql中，空值最先显示）</blockquote><pre id="bc8ce9d8-2adb-4199-a77a-fe0c96e90ae1" class="code"><code>mysql&gt; select Sno,Grade from sc order by Grade asc; 
++-----------+-------+
+| Sno       | Grade |
++-----------+-------+
+| 201215122 |    80 |
+| 201215121 |    85 |
+| 201215121 |    88 |
+| 201215122 |    90 |
+| 201215121 |    92 |
++-----------+-------+
+5 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="3c329bd1-e7ee-4743-ab94-8895a7e5cbaf" class="toggle"><li><details open=""><summary>降序</summary><blockquote id="a220300b-6a44-4569-8848-22b6458c51ce" class="">DESC：降序（在mysql中，空值最后显示）</blockquote><pre id="286e3c55-7130-429b-925f-35c7ea184da9" class="code"><code>mysql&gt; select Sno,Grade from sc order by Grade desc;
++-----------+-------+
+| Sno       | Grade |
++-----------+-------+
+| 201215121 |    92 |
+| 201215122 |    90 |
+| 201215121 |    88 |
+| 201215121 |    85 |
+| 201215122 |    80 |
++-----------+-------+
+5 rows in set (0.00 sec)</code></pre></details></li></ul></details></li></ul><ul id="5009e660-74cb-4670-83ae-9aac02127ed9" class="toggle"><li><details open=""><summary>聚集函数</summary><ul id="ef19e404-62cf-4401-b29c-7478e866b4a8" class="toggle"><li><details open=""><summary>计数count</summary><ul id="1bda4d77-3d0d-466a-9bcb-13057dd25604" class="bulleted-list"><li style="list-style-type:disc">count 中可以添加条件，例如：count(if(grade&lt;60,1,null))，实际只统计了行数（null不算在内），不能直接加条件表达式。</li></ul><pre id="393ee036-63fc-48bf-be67-8428cb5a8c2b" class="code"><code>mysql&gt; select * from sc;
++-----------+-----+-------+
+| Sno       | Cno | Grade |
++-----------+-----+-------+
+| 201215121 | 1   |    92 |
+| 201215121 | 2   |    85 |
+| 201215121 | 3   |    88 |
+| 201215122 | 2   |    90 |
+| 201215122 | 3   |    80 |
++-----------+-----+-------+
+5 rows in set (0.00 sec)
+
+mysql&gt; select count(Cno) as &#x27;科目&#x27; from sc;               
++--------+
+| 科目   |
++--------+
+|      5 |
++--------+
+1 row in set (0.01 sec)
+
+mysql&gt; select count(distinct Cno) as &#x27;科目&#x27; from sc;
++--------+
+| 科目   |
++--------+
+|      3 |
++--------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="fae52c7f-fead-49f5-a9a7-ceab0ce7ea9c" class="toggle"><li><details open=""><summary>求和sum</summary><ul id="54d6e4d6-9ecc-4f0a-9955-b083e96f15eb" class="bulleted-list"><li style="list-style-type:disc">sum 中可以添加条件，例如：sum(if(grade&lt;60,1,0))，不能直接加条件表达式。</li></ul><pre id="bbf63705-2599-4605-94c6-cf9ddf55a9d3" class="code"><code>mysql&gt; select Sno 学号,sum(Grade) 成绩 from sc group by Sno; 
++-----------+--------+
+| 学号      | 成绩   |
++-----------+--------+
+| 201215121 |    265 |
+| 201215122 |    170 |
++-----------+--------+
+2 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="953f2c05-d185-4b34-a856-e2538c362dec" class="toggle"><li><details open=""><summary>求平均值avg</summary><pre id="e18dd8a5-32bb-4067-af84-1550f802fe04" class="code"><code>mysql&gt; select avg(Grade) 课程二平均成绩 from sc where Cno=&#x27;2&#x27;;
++-----------------------+
+| 课程二平均成绩        |
++-----------------------+
+|               87.5000 |
++-----------------------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="390ee91d-68a4-4628-a175-6cfb4db4d022" class="toggle"><li><details open=""><summary>求最大值max</summary><pre id="ba016fab-6e7e-4226-b32f-27477ef5019c" class="code"><code>mysql&gt; select max(Grade) 课程三最高成绩 from sc where Cno=&#x27;3&#x27;;
++-----------------------+
+| 课程三最高成绩        |
++-----------------------+
+|                    88 |
++-----------------------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="c8af3b89-e38b-48a1-b800-856a5f6696e1" class="toggle"><li><details open=""><summary>求最小值min</summary><pre id="214e895b-9270-43f6-9d4c-9d7b9b84c392" class="code"><code>mysql&gt; select min(Grade) 课程三最低成绩 from sc where Cno=&#x27;3&#x27;; 
++-----------------------+
+| 课程三最低成绩        |
++-----------------------+
+|                    80 |
++-----------------------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="41b14da9-8c36-4dda-833f-1936688af100" class="toggle"><li><details open=""><summary>高级函数group_concat</summary><ul id="a628baf8-3d9d-4760-a8bc-3f91f715b0e2" class="bulleted-list"><li style="list-style-type:disc">用来拼接值，通常结合order by和group by使用，值之间默认以逗号连接</li></ul><ul id="79d5ed34-30cc-48ab-a3be-7e7a54881063" class="toggle"><li><details open=""><summary>示例</summary><pre id="c417b317-86ae-4608-b7d9-3626e8064828" class="code"><code>###查询和&quot;01&quot;号的同学学习的课程完全相同的其他同学的信息###
+
+##条件##
+mysql&gt; select group_concat(cid order by cid) gc from score where sid = &#x27;01&#x27;; 
++----------+
+| gc       |
++----------+
+| 01,02,03 |
++----------+
+1 row in set (0.00 sec)
+
+##需要筛选的数据##
+mysql&gt; select group_concat(cid order by cid) gc from score group by sid having sid &lt;&gt; &#x27;01&#x27;;
++----------+
+| gc       |
++----------+
+| 01,02,03 |
+| 01,02,03 |
+| 01,02,03 |
+| 01,02    |
+| 01,03    |
+| 02,03    |
++----------+
+6 rows in set (0.00 sec)
+
+##筛选出的数据所对应的sid##
+mysql&gt; select sid from (select sid, group_concat(cid order by cid) gc from score group by sid having sid &lt;&gt; &#x27;01&#x27;) sc1 where gc in (select group_concat(cid order by cid) gc from score where sid = &#x27;01&#x27;);
++-----+
+| sid |
++-----+
+| 02  |
+| 03  |
+| 04  |
++-----+
+3 rows in set (0.00 sec)
+
+##拼接，得到题目所要求查询出的数据##
+mysql&gt; select * from student where sid in
+    -&gt; (select sid from
+    -&gt; (select sid, group_concat(cid order by cid) gc from score
+    -&gt; group by sid having sid &lt;&gt; &#x27;01&#x27;) sc1 where gc in
+    -&gt; (select group_concat(cid order by cid) gc from score
+    -&gt; where sid = &#x27;01&#x27;));
++-----+--------+------------+------+
+| sid | sname  | sbirth     | ssex |
++-----+--------+------------+------+
+| 02  | 钱电   | 1990-12-21 | 男   |
+| 03  | 孙风   | 1990-05-20 | 男   |
+| 04  | 李云   | 1990-08-06 | 男   |
++-----+--------+------------+------+
+3 rows in set (0.00 sec)</code></pre></details></li></ul></details></li></ul><ul id="7ef809c5-f173-4c71-b06c-bea2531164fd" class="toggle"><li><details open=""><summary>高级函数rank</summary><ul id="5604964b-5dbb-41bf-af21-629c27804ad3" class="bulleted-list"><li style="list-style-type:disc">用来给数据排名<ul id="a3056bc9-7c1f-4317-8f73-8148cf6b4af0" class="bulleted-list"><li style="list-style-type:circle"><code>PARTITION BY</code>子句按学科将结果集分成多个分区</li></ul><ul id="9c42a030-a596-49a8-9af0-b01162a5dccb" class="bulleted-list"><li style="list-style-type:circle"><code>ORDER BY</code>子句按科目分数按降序对学生进行排序</li></ul><pre id="e89e45f2-eb18-42d1-ab3d-c3e4f6bfd309" class="code"><code>###按各科成绩进行排序，并显示排名###
+
+mysql&gt; select sid, cid, sscore,
+    -&gt; rank() over(partition by cid order by sscore desc) &#x27;rank&#x27;
+    -&gt; from score
+    -&gt; order by sid, cid asc;
++-----+-----+--------+------+
+| sid | cid | sscore | rank |
++-----+-----+--------+------+
+| 01  | 01  |     80 |    1 |
+| 01  | 02  |     90 |    1 |
+| 01  | 03  |     99 |    1 |
+| 02  | 01  |     70 |    4 |
+| 02  | 02  |     60 |    5 |
+| 02  | 03  |     80 |    3 |
+| 03  | 01  |     80 |    1 |
+| 03  | 02  |     80 |    4 |
+| 03  | 03  |     80 |    3 |
+| 04  | 01  |     50 |    5 |
+| 04  | 02  |     30 |    6 |
+| 04  | 03  |     20 |    6 |
+| 05  | 01  |     76 |    3 |
+| 05  | 02  |     87 |    3 |
+| 06  | 01  |     31 |    6 |
+| 06  | 03  |     34 |    5 |
+| 07  | 02  |     89 |    2 |
+| 07  | 03  |     98 |    2 |
++-----+-----+--------+------+
+18 rows in set (0.00 sec)</code></pre></li></ul><ul id="f34dea66-f48d-40ad-99cc-9e6c108d6a01" class="bulleted-list"><li style="list-style-type:disc">如果要对排名进行筛选，需要将其作为子查询<pre id="c6723b79-ae47-445e-b503-5071e61a95d0" class="code"><code>###查询各科成绩前三名的记录###
+
+mysql&gt; select * from (select sid, cid, sscore &#x27;score&#x27;,
+    -&gt; rank() over(partition by cid order by sscore desc) &#x27;rank&#x27;
+    -&gt; from score) sc
+    -&gt; where sc.rank &lt;= 3;</code></pre></li></ul></details></li></ul></details></li></ul><ul id="05f33a06-e823-46e8-b8b4-e00b8a497dbc" class="toggle"><li><details open=""><summary>对查询结果分组</summary><ul id="306b6e9a-9b40-4370-808b-fbb1def89c34" class="bulleted-list"><li style="list-style-type:disc">对查询结果分组后，聚集函数将分别作用于每个组</li></ul><ul id="c54568bf-21a4-4fcb-a471-91fb971abaef" class="bulleted-list"><li style="list-style-type:disc">分组方法：按指定的一列或多列分组，值相等为一组（先排序后分组）</li></ul><ul id="d0622aa2-22e5-401c-8ba2-960e2c20894a" class="bulleted-list"><li style="list-style-type:disc">使用group by子句后，select中的列名只能存在分组属性和聚集函数</li></ul><ul id="fef5d6e7-5436-4221-accc-45fae7a882d7" class="bulleted-list"><li style="list-style-type:disc">未使用聚合函数的列必须出现在group by后面<blockquote id="f2e4634f-b089-4240-9283-cfa73e2b87ac" class="">select Sno,Cno from SC group by Sno（错误）
+选择列表中的列 ‘SC.Cno’ 无效，因为该列没有包含在聚合函数或 GROUP BY 子句中。
+方法1：包含在Group By语句的后面，作为分组的依据
+方法2：包含在聚合函数中</blockquote></li></ul><ul id="cde7fa37-302d-454b-9698-051956d33243" class="toggle"><li><details open=""><summary>实例</summary><pre id="dab16c76-9203-4771-aca0-58cbfe469e76" class="code"><code>#选课门数：实际上统计的是每组的行数
+mysql&gt; select Sno as &#x27;学号&#x27;,count(*) as &#x27;选课门数&#x27;,sum(Grade) as &#x27;成绩&#x27; from sc group by Sno;
++-----------+--------------+--------+
+| 学号      | 选课门数     | 成绩   |
++-----------+--------------+--------+
+| 201215121 |            3 |    265 |
+| 201215122 |            2 |    170 |
++-----------+--------------+--------+
+2 rows in set (0.00 sec)</code></pre></details></li></ul></details></li></ul><ul id="f194059f-bab2-4167-94a7-fcaf8869eebe" class="toggle"><li><details open=""><summary>使用having短语筛选最终输出结果</summary><ul id="d3276f16-c921-4cbb-bfc3-d416bf74dd9a" class="bulleted-list"><li style="list-style-type:disc">只有满足having短语指定条件的组才输出</li></ul><ul id="e5d094c0-9f25-404e-afd5-e57bc7d6d744" class="bulleted-list"><li style="list-style-type:disc">where作用于基表或视图，寻找满足条件的元组，having作用于组，寻找满足条件的组</li></ul><ul id="d55096bc-cdc8-44cf-8102-5bac2a4eeb4e" class="toggle"><li><details open=""><summary>实例</summary><pre id="6997c1b0-2649-42d0-b44f-fdf6a2f65dbf" class="code"><code>mysql&gt; select Sno as &#x27;学号&#x27;,count(*) as &#x27;选课门数&#x27;,sum(Grade) as &#x27;成绩&#x27;
+    -&gt; from sc group by Sno having count(*) &gt; 2;
++-----------+--------------+--------+
+| 学号      | 选课门数     | 成绩   |
++-----------+--------------+--------+
+| 201215121 |            3 |    265 |
++-----------+--------------+--------+
+1 row in set (0.00 sec)
+
+#在考试分数不低于85分的学生中，选择至少有两门课程不低于85的学生学号
+mysql&gt; select Sno 学号 from sc where Grade&gt;=85 group by Sno having count(*)&gt;=2;
++-----------+
+| 学号      |
++-----------+
+| 201215121 |
++-----------+
+1 row in set (0.00 sec)</code></pre><p id="a94efcf0-7ba7-4c7d-a3b2-5dbe53ceada2" class="">
+</p></details></li></ul></details></li></ul><h3 id="20a81df6-6cf4-466e-8526-053efc254645" class="">连接查询</h3><ul id="63bc56a9-72b6-4843-851a-bc708ad25ac1" class="toggle"><li><details open=""><summary>图例</summary><figure id="8de97ab0-e1c0-4893-8bff-f103732cb83b" class="image"><a href="DQL%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2021a1ffdfe6094f1e83719b2b4e6d8e0b/QQ%E5%9B%BE%E7%89%8720220420223539.png"><img style="width:966px" src="DQL%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2021a1ffdfe6094f1e83719b2b4e6d8e0b/QQ%E5%9B%BE%E7%89%8720220420223539.png"/></a></figure></details></li></ul><ul id="a401d539-45e4-484d-aebc-558da3913d04" class="toggle"><li><details open=""><summary>广义笛卡尔积</summary><ul id="ae2c566e-6320-49f6-b502-92fee7a80391" class="bulleted-list"><li style="list-style-type:disc">广义笛卡尔积实际上是指两个表的组合</li></ul><ul id="cf09c54e-4ee1-4bbb-808a-8a33f1eb570c" class="toggle"><li><details open=""><summary>实例</summary><pre id="03446cbd-da87-42b0-8eca-5cb8b1f62c1f" class="code"><code>#s表有四行数据，sc表有五行数据，故笛卡尔积有二十行数据
+
+mysql&gt; select * from s;
++-----------+--------+------+------+-------+--------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth |
++-----------+--------+------+------+-------+--------+
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL   |
+| 201215125 | 张立   | 男   |   19 | IS    | NULL   |
++-----------+--------+------+------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql&gt; select * from sc;
++-----------+-----+-------+
+| Sno       | Cno | Grade |
++-----------+-----+-------+
+| 201215121 | 1   |    92 |
+| 201215121 | 2   |    85 |
+| 201215121 | 3   |    88 |
+| 201215122 | 2   |    90 |
+| 201215122 | 3   |    80 |
++-----------+-----+-------+
+5 rows in set (0.00 sec)
+
+mysql&gt; select s.*,sc.* from s,sc;
++-----------+--------+------+------+-------+--------+-----------+-----+-------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth | Sno       | Cno | Grade |
++-----------+--------+------+------+-------+--------+-----------+-----+-------+
+| 201215125 | 张立   | 男   |   19 | IS    | NULL   | 201215121 | 1   |    92 |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL   | 201215121 | 1   |    92 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   | 201215121 | 1   |    92 |
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215121 | 1   |    92 |
+| 201215125 | 张立   | 男   |   19 | IS    | NULL   | 201215121 | 2   |    85 |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL   | 201215121 | 2   |    85 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   | 201215121 | 2   |    85 |
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215121 | 2   |    85 |
+| 201215125 | 张立   | 男   |   19 | IS    | NULL   | 201215121 | 3   |    88 |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL   | 201215121 | 3   |    88 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   | 201215121 | 3   |    88 |
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215121 | 3   |    88 |
+| 201215125 | 张立   | 男   |   19 | IS    | NULL   | 201215122 | 2   |    90 |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL   | 201215122 | 2   |    90 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   | 201215122 | 2   |    90 |
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215122 | 2   |    90 |
+| 201215125 | 张立   | 男   |   19 | IS    | NULL   | 201215122 | 3   |    80 |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL   | 201215122 | 3   |    80 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   | 201215122 | 3   |    80 |
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215122 | 3   |    80 |
++-----------+--------+------+------+-------+--------+-----------+-----+-------+
+20 rows in set (0.01 sec)</code></pre></details></li></ul></details></li></ul><ul id="8047caee-97e2-4ade-a884-8310eafd336f" class="toggle"><li><details open=""><summary>等值与非等值连接查询</summary><ul id="2054dbd9-c50b-470e-b877-6cadad452ec6" class="toggle"><li><details open=""><summary>等值连接</summary><ul id="318c4667-4020-4217-a2a4-7192354586e7" class="bulleted-list"><li style="list-style-type:disc">连接运算符为 = 的连接操作</li></ul><ul id="1af4058f-bb3b-44b0-ad81-2f1bc00e9251" class="bulleted-list"><li style="list-style-type:disc">引用不同表的同名属性时，必须加表名前缀</li></ul><ul id="d24ba60b-0789-4aad-8120-e76eada91d92" class="bulleted-list"><li style="list-style-type:disc">引用唯一属性时，表名前缀可加可不加</li></ul><pre id="7f24471b-84cd-4854-a73a-ceff2af620a1" class="code"><code>mysql&gt; select s.*,sc.* from s,sc where s.Sno=sc.Sno;
++-----------+--------+------+------+-------+--------+-----------+-----+-------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth | Sno       | Cno | Grade |
++-----------+--------+------+------+-------+--------+-----------+-----+-------+
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215121 | 1   |    92 |
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215121 | 2   |    85 |
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   | 201215121 | 3   |    88 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   | 201215122 | 2   |    90 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   | 201215122 | 3   |    80 |
++-----------+--------+------+------+-------+--------+-----------+-----+-------+
+5 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="363da9a4-97a7-4971-8a08-4df58e8da141" class="toggle"><li><details open=""><summary>自然连接</summary><ul id="a475362f-2c83-4e29-b350-627673a2655d" class="bulleted-list"><li style="list-style-type:disc">一种特殊的等值连接</li></ul><pre id="bf3cde39-6880-4d9e-a893-8e78afd7ba79" class="code"><code>#指定查询的列，以便去掉重复的属性列
+mysql&gt; select s.Sno,Sname,Ssex,Sage,Sdept,Cno,Grade from s,sc where s.Sno=sc.Sno;
++-----------+--------+------+------+-------+-----+-------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Cno | Grade |
++-----------+--------+------+------+-------+-----+-------+
+| 201215121 | 李勇   | 男   |   20 | CS    | 1   |    92 |
+| 201215121 | 李勇   | 男   |   20 | CS    | 2   |    85 |
+| 201215121 | 李勇   | 男   |   20 | CS    | 3   |    88 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | 2   |    90 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | 3   |    80 |
++-----------+--------+------+------+-------+-----+-------+
+5 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="16a1e316-78ae-4571-aeda-257a1d8caccb" class="toggle"><li><details open=""><summary>非等值连接</summary><ul id="717de53e-fd3c-4771-9e02-7891f0ac8dee" class="bulleted-list"><li style="list-style-type:disc">连接运算符不是 = 的连接操作</li></ul><ul id="b123da3b-c4e0-4fd8-ab06-a0b7a537dabe" class="bulleted-list"><li style="list-style-type:disc">如：&gt;、&lt;、&gt;=、&lt;=、!=、between...and...</li></ul></details></li></ul></details></li></ul><ul id="8e05920d-24a4-417c-9714-f643caa5985e" class="toggle"><li><details open=""><summary>自身连接</summary><ul id="4aa1c232-1cfa-4aa1-a2a5-38a8cb0d9c9b" class="bulleted-list"><li style="list-style-type:disc">一个表与自己进行连接</li></ul><ul id="ba84dfda-57fb-4f2e-803f-604fc2387f2f" class="bulleted-list"><li style="list-style-type:disc">需要给表起别名以示区别</li></ul><ul id="5128d524-b1b2-480d-9bcf-8cebda7be05f" class="bulleted-list"><li style="list-style-type:disc">必须使用别名前缀（所有属性名均为同名属性）</li></ul><pre id="9e8b78dd-0b6e-4e93-a408-c05b19aa0c9b" class="code"><code>mysql&gt; select * from c;
++-----+--------------+---------+------+
+| Cno | Cname        | Ccredit | Cpno |
++-----+--------------+---------+------+
+| 1   | 数据库       |       4 | 5    |
+| 2   | 数学         |       2 | NULL |
+| 3   | 信息系统     |       4 | 1    |
+| 4   | 操作系统     |       3 | 6    |
+| 5   | 数据结构     |       4 | 7    |
+| 6   | 数据处理     |       2 | NULL |
+| 7   | PASCAL语言   |       4 | 6    |
++-----+--------------+---------+------+
+7 rows in set (0.00 sec)
+
+#查询每一门课的间接先修课（先修课的先修课）
+#课程（Cno）对应先修课程（Cpno）,先修课程（Cno&#x27;）对应先修课程（Cpno&#x27;）
+#条件为Cpno=Cno&#x27;，此时选出两行数据，并输出Cno和Cpno&#x27;，即课程（Cno）的间接先修课（Cpno&#x27;）
+mysql&gt; select FIRST.Cno,SECOND.Cpno from c FIRST,c SECOND where First.Cpno=SECOND.Cno;
++-----+------+
+| Cno | Cpno |
++-----+------+
+| 3   | 5    |
+| 1   | 7    |
+| 7   | NULL |
+| 4   | NULL |
+| 5   | 6    |
++-----+------+
+5 rows in set (0.01 sec)</code></pre></details></li></ul><ul id="c91e6b43-fbf5-4561-bef8-7f8329806b9a" class="toggle"><li><details open=""><summary>外连接</summary><ul id="8bb40294-c69c-4b4f-a408-999747068ed2" class="bulleted-list"><li style="list-style-type:disc">普通连接输出满足连接条件的元组</li></ul><ul id="a27aca23-80f4-4d22-ac09-636ef9805f3e" class="bulleted-list"><li style="list-style-type:disc">外连接输出满足条件的表（将表中不满足条件的元组一并输出）</li></ul><ul id="9056c0a1-03c4-4245-b036-858d271d0159" class="bulleted-list"><li style="list-style-type:disc">语法格式：<pre id="43fc7cc5-2262-47da-8074-f816e43e2a2b" class="code"><code>#outer可以省略
+select [列名] from [表1] left/right outer join [表2] on [连接条件]</code></pre></li></ul><ul id="f0f99c41-aa71-43f2-a1b6-f380d2c5d8fe" class="bulleted-list"><li style="list-style-type:disc">左值查询：返回表1的所有数据，若表1中某行在表2中无匹配行，则表2的字段值为空值（NULL）</li></ul><ul id="017d3705-10e6-48c4-807d-182cb50ae47a" class="bulleted-list"><li style="list-style-type:disc">右值查询：返回表2的所有数据，若表2中某行在表1中无匹配行，则表1的字段值为空值（NULL）</li></ul><ul id="7805c960-cd65-4d76-82d8-bbbe33f1ac98" class="toggle"><li><details open=""><summary>实例</summary><pre id="2e21e8b8-c7ce-487e-bbd5-4097974975d1" class="code"><code>#自然连接
+mysql&gt; select s.Sno,Sname,Ssex,Sage,Sdept,Cno,Grade from s,sc where s.Sno=sc.Sno;         
++-----------+--------+------+------+-------+-----+-------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Cno | Grade |
++-----------+--------+------+------+-------+-----+-------+
+| 201215121 | 李勇   | 男   |   20 | CS    | 1   |    92 |
+| 201215121 | 李勇   | 男   |   20 | CS    | 2   |    85 |
+| 201215121 | 李勇   | 男   |   20 | CS    | 3   |    88 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | 2   |    90 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | 3   |    80 |
++-----------+--------+------+------+-------+-----+-------+
+5 rows in set (0.00 sec)
+
+#外连接
+mysql&gt; select s.Sno,Sname,Ssex,Sage,Sdept,Cno,Grade from s left join sc on (s.Sno=sc.Sno);
++-----------+--------+------+------+-------+------+-------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Cno  | Grade |
++-----------+--------+------+------+-------+------+-------+
+| 201215121 | 李勇   | 男   |   20 | CS    | 3    |    88 |
+| 201215121 | 李勇   | 男   |   20 | CS    | 2    |    85 |
+| 201215121 | 李勇   | 男   |   20 | CS    | 1    |    92 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | 3    |    80 |
+| 201215122 | 刘晨   | 女   |   19 | CS    | 2    |    90 |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL |  NULL |
+| 201215125 | 张立   | 男   |   19 | IS    | NULL |  NULL |
++-----------+--------+------+------+-------+------+-------+
+7 rows in set (0.00 sec)</code></pre></details></li></ul></details></li></ul><ul id="f922ff1b-6210-4645-9fea-c78735b92da7" class="toggle"><li><details open=""><summary>复合条件连接</summary><ul id="8beaae6a-9c89-4ae3-81a3-d2aff14392ea" class="bulleted-list"><li style="list-style-type:disc">where包含多个连接条件</li></ul><pre id="4d370ff0-9cdb-4745-8205-4eb75d67df28" class="code"><code>#查询选修2号课程且成绩在86分以上的所有学生的学号、姓名
+mysql&gt; select s.Sno,s.Sname from s,sc where s.Sno=sc.Sno and sc.Cno=&#x27;2&#x27; and sc.Grade&gt;86;
++-----------+--------+
+| Sno       | Sname  |
++-----------+--------+
+| 201215122 | 刘晨   |
++-----------+--------+
+1 row in set (0.00 sec)</code></pre></details></li></ul><ul id="e9d498f9-f897-4f14-999a-9a564beeb4fc" class="toggle"><li><details open=""><summary>多表连接</summary><pre id="5bde5a87-046d-4c10-93d8-0180699dc321" class="code"><code>mysql&gt; select Sname,Cname,Grade from s,sc,c where s.Sno=sc.Sno and sc.Cno=c.Cno;
++--------+--------------+-------+
+| Sname  | Cname        | Grade |
++--------+--------------+-------+
+| 李勇   | 数据库       |    92 |
+| 李勇   | 数学         |    85 |
+| 李勇   | 信息系统     |    88 |
+| 刘晨   | 数学         |    90 |
+| 刘晨   | 信息系统     |    80 |
++--------+--------------+-------+
+5 rows in set (0.00 sec)</code></pre></details></li></ul><h3 id="733c66d9-bb38-4fe9-8b9b-5aaadb22ebff" class="">嵌套查询</h3><ul id="e729b699-b729-4326-946b-e3aa93709174" class="toggle"><li><details open=""><summary>概述</summary><ul id="6035e62c-4127-4b87-936e-a214f816bd08" class="bulleted-list"><li style="list-style-type:disc">一个select-from-where语句称为一个查询块</li></ul><ul id="1f25f177-88a4-407b-ac9a-f59fd65f1f67" class="bulleted-list"><li style="list-style-type:disc">定义：将一个查询块嵌套在另一个查询块的where子句或having短语条件中的查询</li></ul><ul id="6d99745e-810d-44d6-a995-f0744654fb15" class="bulleted-list"><li style="list-style-type:disc">子查询不能使用order by语句</li></ul><ul id="398bad63-0f32-4720-a827-a79e54b89f4f" class="bulleted-list"><li style="list-style-type:disc">嵌套查询分为相关子查询和不相关子查询</li></ul></details></li></ul><ul id="d48b83c1-4575-4fb7-92dd-0adb052b7923" class="toggle"><li><details open=""><summary>带in的子查询</summary><pre id="199bc237-8306-46ff-ad7a-f0cee5afdd38" class="code"><code>###查询与“刘晨”在同一个系学习的学生###
+
+#分步执行
+mysql&gt; select Sdept from s where Sname=&#x27;刘晨&#x27;;
++-------+
+| Sdept |
++-------+
+| CS    |
++-------+
+1 row in set (0.01 sec)
+mysql&gt; select Sno,Sname,Sdept from s where Sdept=&#x27;CS&#x27;;       
++-----------+--------+-------+
+| Sno       | Sname  | Sdept |
++-----------+--------+-------+
+| 201215121 | 李勇   | CS    |
+| 201215122 | 刘晨   | CS    |
++-----------+--------+-------+
+2 rows in set (0.00 sec)
+
+#使用嵌套查询执行
+mysql&gt; select Sno,Sname,Sdept from s where Sdept in 
+    -&gt; (select Sdept from s where Sname=&#x27;刘晨&#x27;);
++-----------+--------+-------+
+| Sno       | Sname  | Sdept |
++-----------+--------+-------+
+| 201215121 | 李勇   | CS    |
+| 201215122 | 刘晨   | CS    |
++-----------+--------+-------+
+2 rows in set (0.00 sec)
+
+#父查询和子查询均可定义别名
+mysql&gt; select Sno,Sname,Sdept from s s1 where s1.Sdept in
+    -&gt; (select Sdept from s s2 where s2.Sname=&#x27;刘晨&#x27;);
++-----------+--------+-------+
+| Sno       | Sname  | Sdept |
++-----------+--------+-------+
+| 201215121 | 李勇   | CS    |
+| 201215122 | 刘晨   | CS    |
++-----------+--------+-------+
+2 rows in set (0.00 sec)
+
+#使用自身连接
+mysql&gt; select s1.Sno,s1.Sname,s1.Sdept from s s1, s s2
+    -&gt; where s1.Sdept=s2.sdept and s2.Sname=&#x27;刘晨&#x27;;
++-----------+--------+-------+
+| Sno       | Sname  | Sdept |
++-----------+--------+-------+
+| 201215121 | 李勇   | CS    |
+| 201215122 | 刘晨   | CS    |
++-----------+--------+-------+
+2 rows in set (0.00 sec)</code></pre><pre id="71da475d-841e-4a0f-aa62-25cf2c19f399" class="code"><code>###查询选修了课程名为“信息系统”的学生学号和姓名###
+
+#首先在Course关系中找出“信息系统”的课程号，结果为3号#
+#然后在SC关系中找出选修了3号课程的学生学号#
+#最后在Student关系中取出Sno和Sname#
+
+mysql&gt; select Sno,Sname from s where Sno in
+    -&gt; (select Sno from sc where Cno in
+    -&gt; (select Cno from c where Cname=&#x27;信息系统&#x27;));
++-----------+--------+
+| Sno       | Sname  |
++-----------+--------+
+| 201215121 | 李勇   |
+| 201215122 | 刘晨   |
++-----------+--------+
+2 rows in set (0.01 sec)
+
+#使用连接查询
+mysql&gt; select s.Sno,s.Sname from s,sc,c
+    -&gt; where s.Sno=sc.Sno and sc.Cno=c.Cno and c.Cname=&#x27;信息系统&#x27;;
++-----------+--------+
+| Sno       | Sname  |
++-----------+--------+
+| 201215121 | 李勇   |
+| 201215122 | 刘晨   |
++-----------+--------+
+2 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="da194e41-76d3-442d-ba8c-af312c26ddd0" class="toggle"><li><details open=""><summary>带比较运算符的子查询</summary><ul id="3e5a7eea-9c28-4bc7-b8fa-28ffc64bc721" class="bulleted-list"><li style="list-style-type:disc">当子查询只可能返回一行时，可以用=代替in</li></ul><pre id="2fad867a-d6d4-4f92-a8fd-e108b2ed7d25" class="code"><code>###找出每个学生超过他自己选修课程平均成绩的课程号###
+
+mysql&gt; select Sno,Cno from sc x      
+    -&gt; where Grade&gt;=(select avg(Grade) from sc y where y.Sno=x.Sno);
++-----------+-----+
+| Sno       | Cno |
++-----------+-----+
+| 201215121 | 1   |
+| 201215122 | 2   |
++-----------+-----+
+2 rows in set (0.00 sec)</code></pre></details></li></ul><ul id="691d8ad9-6d31-41f7-b3e6-4361066180bd" class="toggle"><li><details open=""><summary>带any或all的子查询</summary><blockquote id="11048b9a-f1d5-48fe-974b-ab5ec3908820" class="">any——某个值
+all——所有值</blockquote><pre id="cc74fccb-548d-4aae-9068-172b6a16e134" class="code"><code>###查询其他系中比信息系某一个学生年龄小的学生姓名和年龄###
+
+mysql&gt; select Sname,Sage from s               
+    -&gt; where Sage &lt; any     
+    -&gt; (select Sage from s where Sdept = &#x27;IS&#x27;)
+    -&gt; and Sdept &lt;&gt; &#x27;IS&#x27;;
++--------+------+
+| Sname  | Sage |
++--------+------+
+| 王敏   |   18 |
++--------+------+
+1 row in set (0.00 sec)</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cb945e34-ce79-4c21-a823-b1fc12dedc74"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">使用聚集函数实现子查询通常比使用any或者all查询效率高<pre id="ec441695-4d2b-4f13-a5cd-612716cfc436" class="code"><code>###查询其他系中比信息系所有学生年龄都小的学生姓名及年龄###
+
+#使用all
+mysql&gt; select Sname,Sage from s 
+    -&gt; where Sage &lt; all
+    -&gt; (select Sage from s where Sdept = &#x27;IS&#x27;)
+    -&gt; and Sdept &lt;&gt; &#x27;IS&#x27;;
++--------+------+
+| Sname  | Sage |
++--------+------+
+| 王敏   |   18 |
++--------+------+
+1 row in set (0.00 sec)
+
+#使用聚集函数min
+mysql&gt; select Sname,Sage from s
+    -&gt; where Sage &lt;
+    -&gt; (select min(Sage) from s where Sdept = &#x27;IS&#x27;)
+    -&gt; and Sdept &lt;&gt; &#x27;IS&#x27;;
++--------+------+
+| Sname  | Sage |
++--------+------+
+| 王敏   |   18 |
++--------+------+
+1 row in set (0.00 sec)</code></pre></div></figure></details></li></ul><ul id="02215840-b871-452b-a245-0b2b54e3b1ef" class="toggle"><li><details open=""><summary>带exists的子查询</summary><ul id="385f3498-4af8-4dd6-999a-c9f1bc691263" class="bulleted-list"><li style="list-style-type:disc">概念<blockquote id="b2577ae3-e1d6-4c00-9d49-76561fe2ebd5" class="">exists——null——false
+exists——not null——true
+not exists——null——true
+not exists——not null——false</blockquote></li></ul><ul id="83edf9f8-ad9a-412a-b933-92d97c3eceea" class="bulleted-list"><li style="list-style-type:disc">所有带in，比较运算符，all和any的子查询都能用带exists的子查询替换</li></ul><ul id="fd6cdffd-e21f-423a-b128-a5d983f1f6b8" class="bulleted-list"><li style="list-style-type:disc">在嵌套连接中，exists比in效率高</li></ul><ul id="38838a73-2955-4446-bfc3-77e7eee8df97" class="bulleted-list"><li style="list-style-type:disc">SQL语言中没有全称量词，可以用EXISTS/NOT EXISTS实现全称量词，转换关系如下：<ul id="694d4352-bd04-4911-9527-20683c30e4ea" class="bulleted-list"><li style="list-style-type:circle">(∀x)P ≡ ¬ (∃ x(¬ P))</li></ul></li></ul><pre id="af317aaa-a349-4c54-abc1-ce2db0f62814" class="code"><code>###查询选修了全部课程的学生姓名###
+
+mysql&gt; select Sname from s where not exists
+    -&gt; (select * from c where not exists
+    -&gt; (select * from sc where Sno=s.Sno and Cno=c.Cno));
+Empty set (0.00 sec)
+
+##其他方法##
+mysql&gt; select Sname from s where Sno in
+    -&gt; (select Sno from sc group by Sno having count(*) =
+    -&gt; (select count(*) from c));
+Empty set (0.00 sec)</code></pre></details></li></ul><ul id="167905c0-0de5-436f-9f31-10d9155b56bb" class="toggle"><li><details open=""><summary>应用实例</summary><pre id="0e37a7f8-629a-416b-b37f-2b9a15cc294f" class="code"><code>选修了以数据库作为先行课的课程的学生学号姓名
+mysql&gt; select Sname,Sno from s where Sno in (select Sno from sc where Cno in (select Cno from c where Cpno in (select Cno from c where Cname=&#x27;数据库&#x27;)));                              
++--------+-----------+
+| Sname  | Sno       |
++--------+-----------+
+| 李勇   | 201215121 |
+| 刘晨   | 201215122 |
++--------+-----------+
+2 rows in set (0.00 sec)</code></pre></details></li></ul><h3 id="30491aa4-2bb8-47bd-b5dc-72988cdbdce7" class="">集合查询</h3><ul id="56b020f9-e076-4656-a29f-0a149d20d1c1" class="toggle"><li><details open=""><summary>并操作</summary><ul id="20729127-d3b5-41a9-b391-810a20d14c25" class="bulleted-list"><li style="list-style-type:disc">格式：&lt;查询块&gt; union &lt;查询块&gt;</li></ul><ul id="41f12f4d-9d2a-420a-8332-39b10c2f6550" class="bulleted-list"><li style="list-style-type:disc">要求：<ol type="1" id="65d0ed83-e663-4e30-b549-48b603a4cc03" class="numbered-list" start="1"><li>各表的列数必须相同</li></ol><ol type="1" id="8c0192a1-4ca3-4588-aa4c-1164f035d137" class="numbered-list" start="2"><li>各表的数据类型必须一一对应</li></ol></li></ul><ul id="8653f7e2-7047-432b-804a-1bed3621f2c4" class="bulleted-list"><li style="list-style-type:disc">实例：<pre id="12636693-8d8e-4a53-bbbe-a9940c4c6411" class="code"><code>mysql&gt; select * from s where sdept=&#x27;cs&#x27;       
+    -&gt; union
+    -&gt; select * from s where sage&lt;=19;
++-----------+--------+------+------+-------+--------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth |
++-----------+--------+------+------+-------+--------+
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   |
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   |
+| 201215123 | 王敏   | 女   |   18 | MA    | NULL   |
+| 201215125 | 张立   | 男   |   19 | IS    | NULL   |
++-----------+--------+------+------+-------+--------+
+4 rows in set (0.02 sec)</code></pre></li></ul></details></li></ul><ul id="38f990c4-ee95-4b57-998d-2473786039d9" class="toggle"><li><details open=""><summary>交操作</summary><ul id="d1a5ca50-af92-447a-9db9-b196c4e93e03" class="bulleted-list"><li style="list-style-type:disc">实例：<pre id="708a08b8-f6a2-4b37-b037-986f4ac460f5" class="code"><code>###查询计算机科学系的学生与年龄不大于19岁的学生的交集###
+mysql&gt; select * from s where sdept=&#x27;cs&#x27; and sage&lt;=19;
++-----------+--------+------+------+-------+--------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth |
++-----------+--------+------+------+-------+--------+
+| 201215122 | 刘晨   | 女   |   19 | CS    | NULL   |
++-----------+--------+------+------+-------+--------+
+1 row in set (0.00 sec)</code></pre></li></ul></details></li></ul><ul id="50b0b7d6-9b90-4ad6-8e35-e12cac4145f9" class="toggle"><li><details open=""><summary>差操作</summary><ul id="b449f1e5-70b3-4fef-b2fa-f59caefa7520" class="bulleted-list"><li style="list-style-type:disc">实例：</li></ul><pre id="12aa37b8-9474-4349-9181-e28fd48e1a50" class="code"><code>###查询计算机科学系的学生与年龄不大于19岁的学生的差集###
+###本例实际上是查询计算机科学系中年龄大于19岁的学生###
+mysql&gt; select * from s where sdept=&#x27;cs&#x27; and sage&gt;19;
++-----------+--------+------+------+-------+--------+
+| Sno       | Sname  | Ssex | Sage | Sdept | Sbirth |
++-----------+--------+------+------+-------+--------+
+| 201215121 | 李勇   | 男   |   20 | CS    | NULL   |
++-----------+--------+------+------+-------+--------+
+1 row in set (0.00 sec)</code></pre></details></li></ul></div></article></body></html>

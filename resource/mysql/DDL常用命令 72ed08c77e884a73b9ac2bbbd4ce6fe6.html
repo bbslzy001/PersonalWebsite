@@ -1,0 +1,819 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>DDL常用命令</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="72ed08c7-7e88-4a73-b9ac-2bbbd4ce6fe6" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">▪️</span></div><h1 class="page-title">DDL常用命令</h1></header><div class="page-body"><ul id="48052cac-5f94-4198-95e7-5502f79ef9f5" class="toggle"><li><details open=""><summary>表管理</summary><ul id="986d50cd-9fd7-40c8-b16e-a0421897bd0a" class="toggle"><li><details open=""><summary>创建库</summary><ul id="c10be187-ebe5-4615-b9ae-28f22b119db6" class="bulleted-list"><li style="list-style-type:disc">推荐写法：create database [库名];<figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cbec0df6-cd5d-4201-abe1-d915eda6f588"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">在mysql中创建数据库和创建模式schema效果一样
+一个数据库管理系统可以有多个数据库，一个数据库可以建立多个模式，一个模式下通常包括多个表、视图和索引等数据库对象
+create database和create schema等效</div></figure></li></ul><ul id="28f39290-9dd6-4afa-a04b-cbf5613b6cdf" class="bulleted-list"><li style="list-style-type:disc">create database if not exists [库名];</li></ul></details></li></ul><ul id="c7c55460-ce16-4c42-9bea-657b4180f90c" class="toggle"><li><details open=""><summary>删除库</summary><ul id="d5b967ae-9eab-427a-a345-cf1121d85476" class="bulleted-list"><li style="list-style-type:disc">推荐写法：drop database if exists [库名];</li></ul><ul id="6ea2647c-a7b6-4dab-aab4-86cdba09141f" class="bulleted-list"><li style="list-style-type:disc">drop database [库名];</li></ul></details></li></ul><ul id="ba5106e6-b095-493f-8bb0-784932037954" class="toggle"><li><details open=""><summary>创建表</summary><pre id="5a998d51-a5b7-414d-bbd9-07be512fd0eb" class="code"><code>create table [表名]
+(
+[字段名] [类型(宽度)] [约束条件] [comment ‘注释’],
+[字段名] [类型(宽度)] [约束条件] [comment ‘注释’],
+[字段名] [类型(宽度)] [约束条件] [comment ‘注释’]
+);</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1fb3509f-2eea-46e8-baf3-19a5393be1ef"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">1）在同⼀张表中，字段名不能相同
+2）宽度和约束条件为可选参数，字段名和类型是必须的
+3）最后⼀个字段后不能加逗号
+4）类型是用来限制”字段”必须以何种数据类型来存储记录
+5）类型其实也是对字段的约束(约束字段下的记录必须为XX类型)
+6）类型后写的”约束条件”是在类型之外的”额外添加的约束”</div></figure><blockquote id="f4f8e7a5-3512-4f9e-844f-f7e105f198cc" class="">约束说明：<ul id="17505963-5d14-4c2c-9a99-2f57e6d39a3b" class="bulleted-list"><li style="list-style-type:disc">not null：标识字段不能为空（可以为空字符串’’或者空格）</li></ul><ul id="b4ad2857-5c30-4a0b-b929-1adabd2f501b" class="bulleted-list"><li style="list-style-type:disc">default value：设置字段默认值，默认为value</li></ul><ul id="75444dc7-0c7e-4722-aaad-b1582375b664" class="bulleted-list"><li style="list-style-type:disc">primary key：标识字段为该表的主键，可以唯一的标识记录，支持多字段，插入重复的会报错<ul id="697bf958-52c3-4e6c-9e21-db7e173a1eba" class="bulleted-list"><li style="list-style-type:circle">写法1：跟在列后
+create table test (a int primary key);</li></ul><ul id="77f64f60-055a-4b4b-a431-c6213216d40b" class="bulleted-list"><li style="list-style-type:circle">写法2：在所有列定义之后定义<pre id="5611f1d4-944e-45e2-9d99-5664f145ce70" class="code"><code>create table test1
+(
+a int, 
+b char(5),
+primary key(a)
+);</code></pre><pre id="a0c30268-c696-40db-9d50-2c74a26918c2" class="code"><code>create table test2
+(
+a int, 
+b char(5),
+c varchar(10),
+primary key(a,b)
+);</code></pre></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6f4168b3-2544-42a7-a2a5-58de8bbcb4bc"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">一般情况下，每个表都会定义主键
+每个表只存在一个主键（由一个或多个字段组成）
+设为主键的字段必须为NOT NULL</div></figure></li></ul><ul id="da25dd83-3a5c-406d-9364-85f01000e7e3" class="bulleted-list"><li style="list-style-type:disc">foreign key：为表中的字段设置外键<ul id="8fc83a1a-eb38-46b4-82a5-fd361c6187b7" class="bulleted-list"><li style="list-style-type:circle">语法：
+foreign key ([当前表的列名]) references [被参照表]([引用的外键表的列名]);</li></ul><ul id="95d053fa-cecd-4164-a4cf-753daee28110" class="bulleted-list"><li style="list-style-type:circle">写法：<pre id="9626c169-1057-4fd4-8492-f70b42d6df25" class="code"><code>create table test
+(
+a int,
+b char(5),
+c char(5),
+foreign key(b) references test(c)
+);</code></pre></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="adf01988-2195-4037-b929-342434307f6a"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">1）两张表(可以为同一张表)中需要建立外键关系的字段类型与长度需要⼀致，且一般为同名
+2）被引用的字段需要为主键或者唯一键
+3）被插入的值在外键表必须存在或者为null(无not null约束条件)
+4）删除被参照表时，需要考虑其被引用的字段在外键表中是否还有数据存在</div></figure></li></ul><ul id="48dccbee-290f-439e-9f88-d1b8c6f79d14" class="bulleted-list"><li style="list-style-type:disc">unique key：标识该字段的值唯一，支持多字段，插入重复的会报错<ul id="dbaa5f54-6adb-4a76-86d5-030181bbbde9" class="bulleted-list"><li style="list-style-type:circle">写法1：跟在字段后<pre id="42948116-d49c-405c-bb2d-d177d84a8a47" class="code"><code>create table test (a int not null unique key);</code></pre></li></ul><ul id="0ea58553-a06e-47cf-91b3-83be104bcab7" class="bulleted-list"><li style="list-style-type:circle">写法2：在所有列定义之后定义<pre id="7248242d-937b-43bd-87c2-a7bcaf99d646" class="code"><code>create table test1
+(
+a int not null,
+unique key(a)
+);</code></pre><pre id="74e75906-b2cf-4a92-a826-5a29aaa01109" class="code"><code>create table test2
+(
+a int, 
+b char(5),
+c varchar(10),
+unique key(a,b)
+);</code></pre></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="214379ba-b7ee-4ddc-8d85-cce3c143839e"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">如果不存在not null约束条件，则允许存在多个null</div></figure></li></ul><ul id="031b98ed-d7e4-46fa-84b7-9514307ebf25" class="bulleted-list"><li style="list-style-type:disc">auto_increment：标识该字段的值自动增长（整数类型，且为主键）<blockquote id="fa647ab8-c89f-4045-b24a-46e023388164" class="">自动增长：
+自动增长默认从1开始，每次+1
+自动增长的初始值和步长都能在mysql中进行设置<figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c8599492-2f8d-4fd0-a033-ca4087b10646"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">自增长列的当前值存储在内存中
+数据库每次重启之后，会查询当前表中自增列的最大值作为当前值，如果表数据被清空之后，数据库重启了，自增列的值将从初始值开始</div></figure></blockquote></li></ul></blockquote></details></li></ul><ul id="06140ae4-daf5-488f-a97c-bcae700399c6" class="toggle"><li><details open=""><summary>删除表</summary><ul id="feb8a917-e4eb-426b-a316-dba5c30f9b66" class="bulleted-list"><li style="list-style-type:disc">推荐写法：drop table if exists [表名];</li></ul><ul id="62bac8f7-68e6-4ee6-abbc-574e6a76b41a" class="bulleted-list"><li style="list-style-type:disc">drop table [表名];</li></ul></details></li></ul><ul id="dc2a0cc6-6dd3-49c3-8e78-41dea02802a3" class="toggle"><li><details open=""><summary>修改表名</summary><ul id="2ea8bcb5-26c3-48fd-85fb-1409631d60c6" class="bulleted-list"><li style="list-style-type:disc">alter table [旧表名] rename to [新表名];</li></ul><ul id="cd7f57a4-eaa1-4cc5-9d29-44b7f393751a" class="bulleted-list"><li style="list-style-type:disc">alter table [旧表名] rename [新表名];</li></ul></details></li></ul><ul id="a7bf7a73-3253-448c-aa5a-e33299768af6" class="toggle"><li><details open=""><summary>表设置备注</summary><ul id="8a77e520-b1b6-463d-8e80-ceed5a94ac1f" class="bulleted-list"><li style="list-style-type:disc">alter table [表名] comment ‘[备注信息]’;</li></ul></details></li></ul><ul id="95a1765b-6370-4f3e-8d24-bc6cae3c460e" class="toggle"><li><details open=""><summary>复制表</summary><ul id="9a3c4a53-9d43-421e-9545-43be2a3ae1b9" class="toggle"><li><details open=""><summary>只复制表结构</summary><ul id="fed300a3-cf82-4de7-a094-67c03b14f236" class="bulleted-list"><li style="list-style-type:disc">create table [表名] like [被复制的表名];</li></ul></details></li></ul><ul id="db3bafb1-d745-4631-93d3-dfcc1a71e8fd" class="toggle"><li><details open=""><summary>复制表结构+数据</summary><ul id="7543b44c-16ea-48e9-bb80-36efa70e3f02" class="bulleted-list"><li style="list-style-type:disc">create table [表名] as select [字段],… from [被复制的表名] where [条件];</li></ul><ul id="1d65ed0f-5b99-4d85-9559-05f84807d752" class="bulleted-list"><li style="list-style-type:disc">create table [表名] (select ...);</li></ul></details></li></ul><ul id="e6a7c935-87cc-4b2b-b651-eb2d54713827" class="toggle"><li><details open=""><summary>只复制表数据</summary><ul id="bca5a568-dd80-4869-b2ed-5fb91c22acc6" class="bulleted-list"><li style="list-style-type:disc">insert into [表名] (select ...)</li></ul></details></li></ul></details></li></ul></details></li></ul><ul id="6bef6665-4074-4150-a3ad-375ecb9162a5" class="toggle"><li><details open=""><summary>表中列的管理</summary><ul id="a3557b12-8b6f-493f-adfa-50051d147e34" class="toggle"><li><details open=""><summary>添加列</summary><ul id="f258d432-4da6-4d2b-927b-0c3be3979013" class="bulleted-list"><li style="list-style-type:disc">alter table [表名] add <mark class="highlight-blue">column</mark> [列名] [类型] [约束];</li></ul><ul id="e7005513-ace5-427e-a086-0436828c5648" class="bulleted-list"><li style="list-style-type:disc">alter table [表名] add <mark class="highlight-blue">column</mark> [列名] [类型] [约束] <mark class="highlight-blue">first/after [列名]</mark>;</li></ul></details></li></ul><ul id="1fd880b2-69db-4487-8032-a28ef9731df1" class="toggle"><li><details open=""><summary>添加约束</summary><ul id="ef926c7d-a243-4f2c-b882-ee11d205dbc3" class="bulleted-list"><li style="list-style-type:disc">alter table [表名] add [表级完整性约束];</li></ul><ul id="6fe0482e-bb89-4703-b9fd-a049d5539b9d" class="bulleted-list"><li style="list-style-type:disc">主键约束：
+alter table [表名] add <mark class="highlight-blue">constraint [约束名称]</mark> primary key ([列名]);</li></ul><ul id="9fc6724a-5270-4d88-bdb8-ca1ef4d6428c" class="bulleted-list"><li style="list-style-type:disc">唯一键约束：
+alter table [表名] add <mark class="highlight-blue">constraint [约束名称]</mark> unique key ([列名]);</li></ul><ul id="41d84e42-ffea-43a1-a55a-0f5a40a76992" class="bulleted-list"><li style="list-style-type:disc">外键约束：
+alter table [表名] add <mark class="highlight-blue">constraint [约束名称]</mark> foreign key ([列名]) references [被引用的表名]([被引用的列名])</li></ul></details></li></ul><ul id="52d60406-ef8b-443a-9154-2917be636901" class="toggle"><li><details open=""><summary>修改列</summary><ul id="86090b93-5638-45bf-990b-2421b8e6c84c" class="bulleted-list"><li style="list-style-type:disc">修改类型
+alter table [表名] modify <mark class="highlight-blue">column</mark> [列名] [新类型] [约束] <mark class="highlight-blue">first/after [列名]</mark>;</li></ul><ul id="f6bb399e-e1df-4e7f-b7c6-6b588ca0982a" class="bulleted-list"><li style="list-style-type:disc">修改列名和类型：
+alter table [表名] change <mark class="highlight-blue">column</mark> [列名] [新列名] [新类型] [约束];</li></ul><ul id="6762e6d5-51f7-4151-9c51-76875f8d9340" class="bulleted-list"><li style="list-style-type:disc">修改列名：
+alter table [表名] rename column [列名] to [新列名];</li></ul><ul id="59c5fb67-aa75-46cc-8387-22ddbbba37e1" class="bulleted-list"><li style="list-style-type:disc">修改表名：
+alter table [表名] rename <mark class="highlight-blue">to/as</mark> [新表名];</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8a0cd871-7859-4e18-9365-bb971a46f7ac"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">modify不能修改列名，change可以修改列名
+不写约束时不会改变该列的原约束</div></figure><ul id="33b85881-4804-4f55-a1ad-c191fb1c8d1b" class="bulleted-list"><li style="list-style-type:disc">修改列排序：
+alter table [表名] order by [列名]…</li></ul></details></li></ul><ul id="3990c7e6-ca34-4a38-8bea-5363d1a0c619" class="toggle"><li><details open=""><summary>默认值</summary><ul id="91723bb3-a40f-44e5-a65e-8c43ab48298e" class="bulleted-list"><li style="list-style-type:disc">设置默认值：
+alter table [表名] alter column [列名] set default [值];</li></ul><ul id="84f559b3-133c-4e56-925e-538ac86ee9bb" class="bulleted-list"><li style="list-style-type:disc">删除默认值：
+alter table [表名] alter column [列名] drop default [值];</li></ul></details></li></ul><ul id="9998ea6b-c5ff-410e-8636-79a351bc2da8" class="toggle"><li><details open=""><summary>删除列</summary><ul id="0fb5303a-f5ed-4022-a163-98fd99227ad0" class="bulleted-list"><li style="list-style-type:disc">alter table [表名] drop <mark class="highlight-blue">column</mark> [列名];</li></ul></details></li></ul><ul id="c98f8692-120b-4057-988d-5c145f2da1e5" class="toggle"><li><details open=""><summary>删除约束</summary><ul id="24ab8ca2-2c80-4cbb-9025-aa4e9238d75f" class="bulleted-list"><li style="list-style-type:disc">删除主键：
+alter table [表名] drop primary key;</li></ul><ul id="09f694db-bc7d-4192-9db7-ce4cea042a91" class="bulleted-list"><li style="list-style-type:disc">删除外键：
+alter table [表名] drop foreign key [外键约束名];
+drop index [外键索引名称] on [表名];<pre id="29b02034-22c4-4f28-80a6-b98262fa44fe" class="code"><code>mysql&gt; desc test;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| a     | int      | NO   | PRI | NULL    |       |
+| b     | char(10) | YES  |     | NULL    |       |
+| c     | char(15) | YES  |     | NULL    |       |
+| d     | int      | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql&gt; alter table test add foreign key(d) references test(a);    
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc test;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| a     | int      | NO   | PRI | NULL    |       |
+| b     | char(10) | YES  |     | NULL    |       |
+| c     | char(15) | YES  |     | NULL    |       |
+| d     | int      | YES  | MUL | NULL    |       |
++-------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql&gt; show create table test;
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table
+                                                                                                                               |
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| test  | CREATE TABLE `test` (
+  `a` int NOT NULL,
+  `b` char(10) DEFAULT NULL,
+  `c` char(15) DEFAULT NULL,
+  `d` int DEFAULT NULL,
+  PRIMARY KEY (`a`),
+  KEY `d` (`d`),
+  CONSTRAINT `test_ibfk_1` FOREIGN KEY (`d`) REFERENCES `test` (`a`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 |
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; alter table test drop foreign key `test_ibfk_1`;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc test;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| a     | int      | NO   | PRI | NULL    |       |
+| b     | char(10) | YES  |     | NULL    |       |
+| c     | char(15) | YES  |     | NULL    |       |
+| d     | int      | YES  | MUL | NULL    |       |
++-------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql&gt; show create table test;
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table
+                                                         |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| test  | CREATE TABLE `test` (
+  `a` int NOT NULL,
+  `b` char(10) DEFAULT NULL,
+  `c` char(15) DEFAULT NULL,
+  `d` int DEFAULT NULL,
+  PRIMARY KEY (`a`),
+  KEY `d` (`d`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; show index from test;
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| test  |          0 | PRIMARY  |            1 | a           | A         |           0 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| test  |          1 | d        |            1 | d           | A         |           0 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
+mysql&gt; drop index d on test;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0</code></pre></li></ul></details></li></ul><ul id="b13a3dbf-4e1b-422e-88a9-716538c46d52" class="toggle"><li><details open=""><summary>创建索引</summary><ul id="fa96f7ef-07b6-4271-80b6-27691f9dfd1b" class="bulleted-list"><li style="list-style-type:disc">create index [索引名] on [表名];</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c2470cc8-b396-4ffc-880c-272944b384af"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">在一个基本表只能建立一个聚簇索引</div></figure></details></li></ul><ul id="4416f8bc-6124-4b3c-a409-7dc8ca10cf9f" class="toggle"><li><details open=""><summary>显示索引</summary><ul id="b7c6ac14-c284-44fe-9f87-c9c7e63674a5" class="bulleted-list"><li style="list-style-type:disc">show index from [表名];</li></ul></details></li></ul><ul id="958ad38e-da93-4189-8162-badd597e6d6d" class="toggle"><li><details open=""><summary>修改索引</summary><ul id="1ee3af27-4671-4758-bb23-cc724a3dbdad" class="bulleted-list"><li style="list-style-type:disc">alter index [索引名] rename to [新索引名]</li></ul></details></li></ul><ul id="9eb54662-72ea-494e-b9f1-0dbde5d21069" class="toggle"><li><details open=""><summary>删除索引</summary><ul id="cdbd81e9-b989-4e16-9817-da8fd14ee0bf" class="bulleted-list"><li style="list-style-type:disc">drop index [索引名] on [表名];</li></ul><p id="0bcc70ac-38eb-402c-9d97-833269babda8" class="">
+</p></details></li></ul><ul id="17df72c2-0e8e-43ce-9e77-5024eefd211f" class="toggle"><li><details open=""><summary>索引的意义</summary><p id="7b90d27d-87ac-4950-b507-44aeed6283c2" class="">MySQL 数据库有 2 中检索方式：</p><ul id="df4220d6-2ed2-4d15-9e73-25bc0086a5fd" class="bulleted-list"><li style="list-style-type:disc">全表扫描（效率较低）<p id="95933ad2-90e3-4c63-b2ae-44176f0c660b" class="">查询 ename=’KING’  ：  select * from emp where ename=’KING’;
+如果 ename 没有添加索引，那么通过 ename 过滤数据的时候，ename 字段会全表扫描</p></li></ul><ul id="dc45a5fc-fe63-4bfd-9616-a96c7b744fc7" class="bulleted-list"><li style="list-style-type:disc">通过索引检索（提高查询效率）<p id="6785a78d-4fe5-4e52-8d53-214cff54aa92" class="">创建索引的情况：</p><ol type="1" id="1e84ed40-08e7-477b-86ee-c7794a2eca26" class="numbered-list" start="1"><li>该字段的数据量庞大</li></ol><ol type="1" id="b241c922-f844-4e32-8cd7-d46db91cc170" class="numbered-list" start="2"><li>该字段很少使用 DML 操作（索引需要维护，DML 操作太多的时候，影响检索效率）</li></ol><ol type="1" id="751de0a3-43e7-4a20-a306-05b3e718983b" class="numbered-list" start="3"><li>该字段经常出现在筛选条件 where 中实际开发中根据项目需求或客户需求综合调整</li></ol></li></ul></details></li></ul></details></li></ul></div></article></body></html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Java</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../css/bootstrap.css">
+		<script src="../js/bootstrap.bundle.js"></script>
+		<script src="../js/jquery-3.6.0.min.js"></script>
+		<style>
+			*{margin:0; padding:0;}
+			*{font-family: "微软雅黑";}
+			body
+			{
+				background: url(../img/content-background2.jpg);
+				background-size: 100%;
+				background-repeat: repeat;
+			}
+			.naxbar-search-width
+			{
+				width: 400px;
+			}
+			.naxbar-search-button-width
+			{
+				width: 100px;
+			}
+			.item-font
+			{
+				font-size: 20px;
+				border-top: 2px solid #e7e3f8;
+				border-bottom: 2px solid #e7e3f8;
+			}
+			.item-select a:hover
+			{
+				border-bottom: 2px solid #00a4ff;
+			}
+			.active
+			{
+				font-weight: bold;
+			}
+			.top-box
+			{
+				width: 100%;
+			}
+			.empty-box
+			{
+				width: 100%;
+				height: 60px;
+			}
+			.content-background
+			{
+				width: 100%;
+				margin:0 auto;
+				padding: 40px 0;
+			}
+			.content-box
+			{
+				width: 75%;
+				height: 100%;
+				margin: 0 auto;
+				border: 6px outset lightseagreen;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="top-box">
+			<div class="empty-box"></div>
+			<nav class="navbar navbar-expand-lg navbar-light bg-gradient fixed-top" style="background-color: #e7e3f8;">
+				<div class="container-fluid">
+					<a class="navbar-brand">
+						<img src="../img/icon01.png" alt="慵懒小窝图标" width="100" height="60">
+						<img src="../img/icon02.png" alt="慵懒小窝艺术字" width="145" height="60">
+					</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbar">
+						<ul class="navbar-nav me-auto my-2">
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="../index.html">Home</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="algorithm.html">Algorithm</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font active ms-4" href="java.html">Java</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="mysql.html">Mysql</a></li>
+							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="game.html">Game</a></li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle item-font ms-4" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">其它</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registerModal">注册</a></li>
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">登录</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoModal">作者信息</a></li>
+								</ul>
+							</li>
+						</ul>
+						<form class="d-flex">
+							<input class="form-control me-2 naxbar-search-width" type="search" placeholder="请输入你想要搜索的内容" />
+							<button class="btn btn-outline-primary naxbar-search-button-width" type="submit">搜索</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+		</div>
+		<script>
+			$(".empty-box").height($(".navbar").outerHeight());
+		</script>
+		<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">注册</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row mb-3">
+								<label for="inputName" class="col-3 col-form-label">用户名</label>
+								<div class="col-9 align-self-center">
+									<input type="text" maxlength="20" class="form-control" id="inputName" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputEmail" class="col-3 col-form-label">邮箱地址</label>
+								<div class="col-9 align-self-center">
+									<input type="email" class="form-control" id="inputEmail" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputPassword" class="col-3 col-form-label">密码</label>
+								<div class="col-9 align-self-center">
+									<input type="password" class="form-control" id="inputPassword" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputPasswordSecond" class="col-3 col-form-label">确认密码</label>
+								<div class="col-9 align-self-center">
+									<input type="password" class="form-control" id="inputPasswordSecond" />
+								</div>
+							</div>
+							<fieldset class="row">
+								<legend class="col-form-label col-3">性别</legend>
+								<div class="col-9 align-self-center">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+										<label class="form-check-label" for="inlineRadio1">男</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+										<label class="form-check-label" for="inlineRadio2">女</label>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="reset" class="btn btn-secondary">重置</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">注册</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">登录</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="row mb-3">
+								<label for="inputEmail" class="col-3 col-form-label">邮箱地址</label>
+								<div class="col-9 align-self-center">
+									<input type="email" class="form-control" id="inputEmail" />
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="inputPassword" class="col-3 col-form-label">密码</label>
+								<div class="col-9 align-self-center">
+									<input type="password" class="form-control" id="inputPassword" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="reset" class="btn btn-secondary">重置</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">登录</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">个人信息</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<p>姓名：李兆洋</p>
+						<p>学号：2125050453</p>
+						<p>学院：软件学院</p>
+						<p>专业：软件工程</p>
+						<p>班级：010</p>
+						<p>网站主题：笔记分享网站</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content-background">
+			<div class="content-box">
+				<table class="table table-hover table-success mb-0">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Title</th>
+							<th scope="col">SubmitTime</th>
+							<th scope="col">Author</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4" class="text-end">最后编辑日期：2022.05.28</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+		<script>
+			/* 利用数组模拟 */
+			var arr = new Array
+			(
+				new Array('概览','../resource/java/概览 caaf14f16ccd44719416a735d70e7bdd.html'),
+				new Array('基本格式','../resource/java/基本格式 746716690c6e4b9fbe52d1e5159763bb.html'),
+				new Array('编译执行','../resource/java/编译执行 091c1030456844a08ec96efa652dbaf5.html'),
+				new Array('PATH 和 CLASSPATH','../resource/java/PATH和CLASSPATH cf201e85959a4ce283aa7cac5730f44b.html'),
+				new Array('数据类型','../resource/java/数据类型 8515ab2639174f75bb9d892ff14988e6.html'),
+				new Array('运算符','../resource/java/运算符 1115171b53e848568489f560bf3f5957.html'),
+				new Array('逻辑结构','../resource/java/逻辑结构 54d0f3a86c5d4db0906f7dae4e436703.html'),
+				new Array('方法','../resource/java/方法 d70cd640a972411cb64f2f1bc5543fa8.html'),
+				new Array('类与对象','../resource/java/类与对象 9e1ccbdb9ae2468781df97307c8765eb.html'),
+				new Array('this关键字','../resource/java/this关键字 6dca07ba870c420a814edf08a6b6a009.html'),
+				new Array('简单java类','../resource/java/简单Java类 4a3d641a2d1349f8882ed837cb5b87cf.html'),
+				new Array('static关键字','../resource/java/static关键字 03e83d6026cd4e82a2e1003d44893106.html'),
+				new Array('代码块','../resource/java/代码块 6ef91b9c1c1e4deba962eabd690bb54c.html'),
+				new Array('数组的定义与使用','../resource/java/数组的定义与使用 7b02eb041b024edcb581343942889f21.html')
+			);
+			
+			/* 查找 table 中的 tbody 元素 */
+			var table = document.querySelector('tbody');
+			
+			/* 动态创建行和单元格 */
+			for(var i = 0; i < arr.length; ++i)
+			{
+				var tr = table.insertRow();  /* 动态创建行 */
+				var str = "location.href = " + '\'' + arr[i][1] + '\'';
+				tr.setAttribute('onclick',str);
+				var temp_arr = new Array(String(i + 1),arr[i][0],'2022.05.28','bbslzy');
+				for(var j = 0; j < 4; ++j)
+				{
+					var cell = tr.insertCell(j);  /* 动态创建单元格，创建该行下标为 j 的单元格 */
+					cell.innerHTML = temp_arr[j];
+				}
+			}
+		</script>
+	</body>
+</html>

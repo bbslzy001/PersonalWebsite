@@ -1,0 +1,849 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>类与对象</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9e1ccbdb-9ae2-4687-81df-97307c8765eb" class="page sans"><header><h1 class="page-title">类与对象</h1></header><div class="page-body"><h3 id="204f2572-eadf-4920-997f-4d7c4cd49edd" class="">面向对象三个特点</h3><ul id="4da71fb6-3874-4f2d-853b-318d0ae941e5" class="bulleted-list"><li style="list-style-type:disc">封装性：内部操作对外部而言不可见</li></ul><ul id="49db3c8e-ba10-431d-8727-685ba8661576" class="bulleted-list"><li style="list-style-type:disc">继承性：在已有结构的基础上进行功能扩充</li></ul><ul id="984456b4-d87c-4dd9-89c9-f6ca25dacb35" class="bulleted-list"><li style="list-style-type:disc">多态性：类型的转换处理（在继承性的基础上扩充的概念）</li></ul><h3 id="fb4a14f7-4b46-48da-bd67-ab5291d12d0e" class="">面向对象程序开发步骤</h3><ul id="fbec4187-9d66-4481-9a5d-ca0120457f36" class="bulleted-list"><li style="list-style-type:disc">OOA：面向对象分析</li></ul><ul id="602833c0-f9ad-427d-b5ed-2e7d90a78d46" class="bulleted-list"><li style="list-style-type:disc">OOD：面向对象设计</li></ul><ul id="6813e87b-c72e-462b-9937-d487e0951985" class="bulleted-list"><li style="list-style-type:disc">OOP：面向对象编程</li></ul><h3 id="cf5d89aa-8910-48e5-a60c-0af38e5cceb8" class="">类与对象的概念</h3><ul id="a67a63c1-fb11-4dee-89c0-23ed23d1c65e" class="bulleted-list"><li style="list-style-type:disc">类：描述某一类事物的共性的抽象概念</li></ul><ul id="94ba834f-5fb2-4368-b33d-4bc36c9a80c2" class="bulleted-list"><li style="list-style-type:disc">对象：描述某一个具体产物</li></ul><ul id="0277fade-0a76-44d1-aef6-00968a6a9eab" class="bulleted-list"><li style="list-style-type:disc">概述：<mark class="highlight-red"><strong>类是对象的抽象化，对象是类的实例化</strong></mark><strong>（先有类再有对象）</strong></li></ul><ul id="4c07aea1-de41-406f-8fc1-04b84a17f1f5" class="bulleted-list"><li style="list-style-type:disc">组成：<ul id="20d433e0-cf86-4b08-abb9-42bf163de3ea" class="bulleted-list"><li style="list-style-type:circle">成员属性（Field）</li></ul><ul id="0ddf6d2a-bf73-4b03-850e-3830fd6fa3f2" class="bulleted-list"><li style="list-style-type:circle">操作方法（Method）</li></ul></li></ul><h3 id="9dbbf32a-ffb2-483f-9c35-a605b3234704" class="">类与对象的定义及使用</h3><ul id="17ce02a2-9f6d-4576-8878-6499ed51691b" class="toggle"><li><details open=""><summary>实例</summary><pre id="2f315a9b-4d16-433b-9958-de5e7761b4c8" class="code"><code>class Person
+{
+    String name;
+    int age;
+
+    public void tell()
+    {
+        System.out.println(&quot;姓名：&quot; + name);
+        System.out.println(&quot;年龄：&quot; + age);
+    }
+}
+
+public class JavaDemo
+{
+    public static void main(String[] args)
+    {
+        Person per = new Person();
+        per.name = &quot;张三&quot;;
+        per.age = 18;
+        per.tell();
+    }
+}</code></pre><pre id="6a493fec-aa8c-4f0b-9987-764c3c9b8f9b" class="code"><code>PS D:\_info--Java\project_test\src&gt; javac JavaDemo.java
+PS D:\_info--Java\project_test\src&gt; java JavaDemo
+姓名: 张三
+年龄: 18</code></pre></details></li></ul><ul id="54d46305-94fc-4030-ae37-6ab9273e9233" class="bulleted-list"><li style="list-style-type:disc">创建对象<ul id="0bf7d696-4350-41d6-a5e7-12eedf474e72" class="bulleted-list"><li style="list-style-type:circle">法一）声明并实例化对象：类名称 对象名称 = new 类名称()</li></ul><ul id="15362fb3-e8b4-4444-962c-90468af9e5bb" class="bulleted-list"><li style="list-style-type:circle">法二）<ul id="5f9a0e90-7ab2-4246-a93b-fddc7015c03d" class="bulleted-list"><li style="list-style-type:square">声明对象：类名称 对象名称 = null        //初始化为默认值null</li></ul><ul id="5b3b994e-3b13-40df-aa10-721315b3c523" class="bulleted-list"><li style="list-style-type:square">实例化对象：对象名称 = new 类名称 ()</li></ul></li></ul></li></ul><ul id="061953f4-7c7b-437a-a8e4-f27448467c9a" class="bulleted-list"><li style="list-style-type:disc">使用对象操作类<ul id="d8c83729-06ef-4375-8716-233fa63f6ca3" class="bulleted-list"><li style="list-style-type:circle">使用类的属性：实例化对象 . 成员属性</li></ul><ul id="3916524d-12bb-4b70-95f8-d0f1e55a8ad6" class="bulleted-list"><li style="list-style-type:circle">使用类的方法：实例化对象 . 方法 ()</li></ul></li></ul><h3 id="8afa89e5-54ea-4f84-a103-a92478d09d2d" class="">对象内存分析</h3><ul id="4d890bbf-9bb9-40d1-931a-463279a1521b" class="bulleted-list"><li style="list-style-type:disc">常用两种内存空间<p id="6be1401d-7e30-4b15-94ef-8e082d36bafb" class="">堆内存：保存的是对象的具体信息，在程序之中堆内存的开辟是通过new来完成的</p><p id="255c6db2-c4d2-4b57-b8f1-9634513efdb3" class="">栈内存：保存的是一块堆内存的地址，即对象的地址（可以理解为对象名称）</p></li></ul><figure id="0643e071-0a64-4bb5-9ee2-b6573a3476d4" class="image"><a href="%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%209e1ccbdb9ae2468781df97307c8765eb/Untitled.png"><img style="width:624px" src="%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%209e1ccbdb9ae2468781df97307c8765eb/Untitled.png"/></a></figure><h3 id="2771c2c6-44c5-45a5-8859-e6bcb01df966" class="">对象引用</h3><ul id="59cccaba-b74e-4d54-87b9-08029b041b8e" class="bulleted-list"><li style="list-style-type:disc">相当于传递地址（类似于C++中的指针）<ul id="96851965-41a7-43d5-969f-5e3daf91edfc" class="toggle"><li><details open=""><summary>写在主方法中</summary><pre id="8b739b24-a45c-4739-accc-2b90cfaf9932" class="code"><code>public class JavaDemo
+{
+    public static void main(String[] args)
+    {
+        Person per = new Person();
+        per.name = &quot;张三&quot;;
+        per.age = 18;
+        Person per2 = per;
+        per2.age = 20;
+        per.tell();
+    }
+}</code></pre><pre id="e49ced40-c707-4df1-a763-eea16ce37ca5" class="code"><code>姓名: 张三
+年龄: 20</code></pre></details></li></ul><ul id="11faa3a9-5260-433e-8c1e-7d6b6bcc1c61" class="toggle"><li><details open=""><summary>写在其他方法中</summary><pre id="2c25e64d-f096-410c-9abf-69a6e19c516d" class="code"><code>public class JavaDemo
+{
+    public static void main(String[] args)
+    {
+        Person per = new Person();
+        per.name = &quot;张三&quot;;
+        per.age = 18;
+        change(per);  //等价于Person temp = per; temp.age = 20;
+        per.tell();
+    }
+
+    public static void change(Person temp)
+    {
+        temp.age = 20;
+    }
+}</code></pre><pre id="307377a7-3379-4db7-8921-8f85ed72fa37" class="code"><code>姓名: 张三
+年龄: 20</code></pre></details></li></ul></li></ul><h3 id="c28f2679-4099-4f84-8448-3bf01f4f9b1d" class="">垃圾空间</h3><ul id="7c84dd5a-7eaf-4f2d-b929-1b7237df4bea" class="bulleted-list"><li style="list-style-type:disc">指的是没有任何栈内存所指向的堆内存（类似C++中无指针指向但已开辟的内存）</li></ul><ul id="90e227b1-4ee2-4b22-8562-5c883e99759d" class="bulleted-list"><li style="list-style-type:disc">所有垃圾空间会被GC（垃圾收集器）不定期进行回收并释放空间</li></ul><ul id="d2eead41-d4cd-408a-a395-8e72a4857cb5" class="bulleted-list"><li style="list-style-type:disc">若垃圾过多，会导致GC性能降低，从而降低程序性能</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="71128f16-0bbd-4fed-bb13-18008ce60b2d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">一个栈内存只能够保存一个堆内存的地址数据，若发生更改，则原地址数据将从栈内存中彻底消失</div></figure><h3 id="e5f3af49-fc0e-4d29-b8b9-3bf13791b9cd" class="">成员属性封装</h3><ul id="e391b7c9-7828-40b9-a475-c71d3bf015ee" class="bulleted-list"><li style="list-style-type:disc">利用private对属性进行封装</li></ul><ul id="888e5d18-7ac1-4540-a8ec-f5bddce10a84" class="bulleted-list"><li style="list-style-type:disc">使用外部程序访问封装属性<ul id="661a0045-062d-4cc0-9518-f93fd86991e2" class="bulleted-list"><li style="list-style-type:circle">【setXxx】设置属性（可以用来初始化属性，也可以用来<mark class="highlight-red"><strong>修改属性</strong></mark>）</li></ul><ul id="45b4f679-2176-4dc1-8cc1-b157b6075aff" class="bulleted-list"><li style="list-style-type:circle">【getXxx】取得属性</li></ul></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3505a499-0686-428b-84d3-c93293d30bb7"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-red"><strong>类中所有属性必须使用private来封装</strong></mark>
+如要对属性进行访问，必须提供setter和getter方法</div></figure><ul id="ad3ae448-2e5b-4567-9720-b0f6d5631273" class="toggle"><li><details open=""><summary>实例</summary><pre id="890d21c0-4975-463a-9bb2-3cb510413943" class="code"><code>public class JavaDemo
+{
+    public static void main(String[] args)
+    {
+        //实例化对象
+				Person per = new Person();
+        per.setName(&quot;张三&quot;);
+        per.setAge(-18);
+				//使用对象
+        per.tell();
+    }
+}
+
+class Person
+{
+    private String name;
+    private int age;
+
+    public void tell()
+    {
+        System.out.println(&quot;姓名: &quot; + name);
+        System.out.println(&quot;年龄: &quot; + age);
+    }
+
+    public void setName(String n)
+    {
+        name = n;
+    }
+
+    public void setAge(int a)
+    {
+        if(a&gt;0) age = a;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public int getAge()
+    {
+        return age;
+    }
+}</code></pre><pre id="999bcd80-3d86-4b4f-b1e4-0981bdf97e57" class="code"><code>姓名: 张三
+年龄: 0</code></pre></details></li></ul><h3 id="9ccc7a98-308f-4b36-8d08-c7a3826c24e8" class="">构造方法定义</h3><ul id="4878cf84-385f-4fbb-9d6a-06bd74c5b6ca" class="bulleted-list"><li style="list-style-type:disc">作用：实现实例化对象的属性初始化处理</li></ul><ul id="af060b2c-07c5-4950-a1dc-8e739208df44" class="bulleted-list"><li style="list-style-type:disc">要求：<ul id="e0c43da2-a295-40a3-bbe1-14096d71abe4" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red"><strong>构造方法名称必须与类名称保持一致</strong></mark></li></ul><ul id="2ecf1ad7-771d-4087-a116-17f7800b39cb" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red"><strong>构造方法不允许设置任何的返回值类型，即：无返回值定义</strong></mark></li></ul><ul id="cb75d5d2-b1eb-4e80-b0e3-af58c5c366ef" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-red"><strong>在使用关键字new实例化对象时使用</strong></mark></li></ul></li></ul><ul id="df8f3b08-b34f-419d-9a80-bbca46037e44" class="bulleted-list"><li style="list-style-type:disc">普通方法与构造方法的区别<ul id="4699620a-e957-49b5-80e5-4daa2545b396" class="bulleted-list"><li style="list-style-type:circle">构造方法是在类对象实例化时调用的，普通方法是在类对象实例化产生之后调用的</li></ul></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c57bcb13-91a3-4828-bdd1-92d3eb7aff4e"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><mark class="highlight-red"><strong>所有的类都会有构造方法</strong></mark>
+如果没有显式定义，则编译器会在编译时自动创建“无参构造方法”</div></figure><ul id="283d0f58-487d-4c05-b4ca-484dda6bd48e" class="toggle"><li><details open=""><summary>实例</summary><pre id="98917423-2003-422b-a4b3-f4609d997922" class="code"><code>public class JavaDemo
+{
+    public static void main(String[] args)
+    {
+        Person per = new Person(&quot;张三&quot;, 18);
+        per.tell();
+    }
+}
+
+class Person
+{
+    private String name;
+    private int age;
+
+    public Person(String n, int a)
+    {
+        name = n;
+        age = a;
+    }
+
+    public void tell()
+    {
+        System.out.println(&quot;姓名: &quot; + name);
+        System.out.println(&quot;年龄: &quot; + age);
+    }
+}</code></pre><pre id="3d5875a8-26bb-4e61-af73-c44c74327d40" class="code"><code>姓名: 张三
+年龄: 18</code></pre></details></li></ul><h3 id="cb9ecad9-8918-4e73-b0b4-efaad468661a" class="">构造方法重载</h3><ul id="8fa2b7c5-dd9b-4995-be05-5d222c21b18d" class="bulleted-list"><li style="list-style-type:disc">只需要考虑参数类型及数量</li></ul><ul id="b69f3aa5-cc54-4224-b7a6-047cf561bf87" class="bulleted-list"><li style="list-style-type:disc">定义多个构造方法时，一般按照参数数量进行升序/降序排列</li></ul><ul id="49e39bbe-8501-4b5b-aac1-383cf0b64004" class="toggle"><li><details open=""><summary>实例</summary><pre id="783c9733-bfea-4f8c-8d3a-c1036f71f6da" class="code"><code>public class JavaDemo
+{
+    public static void main(String[] args)
+    {
+        Person per = new Person();
+        per.tell();
+    }
+}
+
+class Person
+{
+    private String name;
+    private int age;
+
+    public Person()
+    {
+        name = &quot;无名氏&quot;;
+        age = -1;
+    }
+
+		public Person(String n, int a)
+    {
+        name = n;
+        age = a;
+    }
+
+    public void tell()
+    {
+        System.out.println(&quot;姓名: &quot; + name);
+        System.out.println(&quot;年龄: &quot; + age);
+    }
+}</code></pre><pre id="2b818e02-3fa0-457f-8460-a608b2245772" class="code"><code>姓名: 无名氏
+年龄: -1</code></pre></details></li></ul><h3 id="55e1f548-2353-4480-9938-1268f0a755bc" class="">匿名对象</h3><ul id="56db7fd1-0011-4464-bb3f-59b72224143c" class="bulleted-list"><li style="list-style-type:disc">没有任何引用名称的对象，使用一次后就会变成垃圾内存，被GC回收</li></ul><ul id="02708558-c0ae-4faf-b045-3440aa95902d" class="toggle"><li><details open=""><summary>实例</summary><pre id="8a8fa5d1-f598-49a5-9a91-26a620406de6" class="code"><code>public class JavaDemo
+{
+    public static void main(String[] args)
+    {
+        new Person(&quot;张三&quot;,18).tell();
+    }
+}
+
+class Person
+{
+    private String name;
+    private int age;
+
+    public Person(String n, int a)
+    {
+        name = n;
+        age = a;
+    }
+
+    public void tell()
+    {
+        System.out.println(&quot;姓名: &quot; + name);
+        System.out.println(&quot;年龄: &quot; + age);
+    }
+}</code></pre></details></li></ul></div></article></body></html>
