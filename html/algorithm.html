@@ -268,6 +268,14 @@
 					cell.innerHTML = temp_arr[j];
 				}
 			}
+			
+			/* 给 title 下的单元格 css 属性添加强制断开单词属性 */
+			var body = document.querySelector('tbody');
+			for(var i = 0; i < body.children.length; ++i)
+			{
+				/* word-break:break-all 可以用来强制单词断开到下一行， word-wrap:break-word 可以适当让单词断开（优先换行）*/
+				body.children[i].children[1].setAttribute("style","word-break:break-all");
+			}
 		</script>
 	</body>
 </html>

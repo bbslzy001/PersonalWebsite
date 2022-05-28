@@ -60,6 +60,35 @@
 				margin: 0 auto;
 				border: 6px outset lightseagreen;
 			}
+			.dont-break-out {
+			
+			/* 这两个在技术上是一样的, 为了兼容了浏览器两个都加上 */
+			
+			overflow-wrap: break-word;
+			
+			word-wrap: break-word;
+			
+			-ms-word-break: break-all;
+			
+			/* 这个的使用在web-kit中有些危险，他可能会阶段所有东西 */
+			
+			word-break: break-all;
+			
+			/* Instead use this non-standard one: */
+			
+			word-break: break-word;
+			
+			/* 如果浏览器支持的话增加一个连接符(Blink不支持) */
+			
+			-ms-hyphens: auto;
+			
+			-moz-hyphens: auto;
+			
+			-webkit-hyphens: auto;
+			
+			hyphens: auto;
+			
+			}
 		</style>
 	</head>
 	<body>
@@ -235,7 +264,7 @@
 				new Array('概览','../resource/java/概览 caaf14f16ccd44719416a735d70e7bdd.html'),
 				new Array('基本格式','../resource/java/基本格式 746716690c6e4b9fbe52d1e5159763bb.html'),
 				new Array('编译执行','../resource/java/编译执行 091c1030456844a08ec96efa652dbaf5.html'),
-				new Array('PATH 和 CLASSPATH','../resource/java/PATH和CLASSPATH cf201e85959a4ce283aa7cac5730f44b.html'),
+				new Array('PATH和CLASSPATH','../resource/java/PATH和CLASSPATH cf201e85959a4ce283aa7cac5730f44b.html'),
 				new Array('数据类型','../resource/java/数据类型 8515ab2639174f75bb9d892ff14988e6.html'),
 				new Array('运算符','../resource/java/运算符 1115171b53e848568489f560bf3f5957.html'),
 				new Array('逻辑结构','../resource/java/逻辑结构 54d0f3a86c5d4db0906f7dae4e436703.html'),
@@ -263,6 +292,14 @@
 					var cell = tr.insertCell(j);  /* 动态创建单元格，创建该行下标为 j 的单元格 */
 					cell.innerHTML = temp_arr[j];
 				}
+			}
+			
+			/* 给 title 下的单元格 css 属性添加强制断开单词属性 */
+			var body = document.querySelector('tbody');
+			for(var i = 0; i < body.children.length; ++i)
+			{
+				/* word-break:break-all 可以用来强制单词断开到下一行， word-wrap:break-word 可以适当让单词断开（优先换行）*/
+				body.children[i].children[1].setAttribute("style","word-break:break-all");
 			}
 		</script>
 	</body>
