@@ -14,13 +14,16 @@
 			{
 				background: url(../img/content-background2.jpg);
 				background-size: 100%;
-				background-repeat: repeat;
 			}
-			.naxbar-search-width
+			@media (max-width: 576px)
+			{
+				.infobox-visibility{display: none;}
+			}
+			.navbar-search-width
 			{
 				width: 400px;
 			}
-			.naxbar-search-button-width
+			.navbar-search-button-width
 			{
 				width: 100px;
 			}
@@ -50,44 +53,55 @@
 			.content-background
 			{
 				width: 100%;
-				margin:0 auto;
 				padding: 40px 0;
 			}
-			.content-box
+			.content-left-box
 			{
-				width: 75%;
-				height: 100%;
-				margin: 0 auto;
 				border: 6px outset lightseagreen;
 			}
-			.dont-break-out {
-			
-			/* 这两个在技术上是一样的, 为了兼容了浏览器两个都加上 */
-			
-			overflow-wrap: break-word;
-			
-			word-wrap: break-word;
-			
-			-ms-word-break: break-all;
-			
-			/* 这个的使用在web-kit中有些危险，他可能会阶段所有东西 */
-			
-			word-break: break-all;
-			
-			/* Instead use this non-standard one: */
-			
-			word-break: break-word;
-			
-			/* 如果浏览器支持的话增加一个连接符(Blink不支持) */
-			
-			-ms-hyphens: auto;
-			
-			-moz-hyphens: auto;
-			
-			-webkit-hyphens: auto;
-			
-			hyphens: auto;
-			
+			.content-right-box
+			{
+				border: 6px outset goldenrod;
+				border-radius: 10%;
+			}
+			.content-add-text
+			{
+				text-align: center;
+				height: 56px;
+				line-height: 52px;
+				width:56px;
+				font-size: 45px;
+				color: green;
+				padding-bottom: 4px;
+			}
+			.profile-photo
+			{
+				display: block;
+				width: 40%;
+				margin: 25px auto;
+				border: 2px solid #000;
+				border-radius: 50%;
+			}
+			.user-info
+			{
+				padding-top: 16px;
+				border-top: 2px solid grey;
+				text-align: center;
+			}
+			.content-add
+			{
+				width: 60px;
+				height: 60px;
+				border: 2px solid seagreen;
+				border-radius: 50%;
+				position: fixed;
+				right: 5%;
+				bottom: 5%;
+				background-color: palegreen;
+			}
+			.content-add:hover
+			{
+				border: 2px solid palegreen;
 			}
 		</style>
 	</head>
@@ -121,8 +135,8 @@
 							</li>
 						</ul>
 						<form class="d-flex">
-							<input class="form-control me-2 naxbar-search-width" type="search" placeholder="请输入你想要搜索的内容" />
-							<button class="btn btn-outline-primary naxbar-search-button-width" type="submit">搜索</button>
+							<input class="form-control me-2 navbar-search-width" type="search" placeholder="请输入你想要搜索的内容" />
+							<button class="btn btn-outline-primary navbar-search-button-width" type="submit">搜索</button>
 						</form>
 					</div>
 				</div>
@@ -131,7 +145,7 @@
 		<script>
 			$(".empty-box").height($(".navbar").outerHeight());
 		</script>
-		<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -186,7 +200,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -216,7 +230,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -238,25 +252,44 @@
 			</div>
 		</div>
 		<div class="content-background">
-			<div class="content-box">
-				<table class="table table-hover table-success mb-0">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Title</th>
-							<th scope="col">SubmitTime</th>
-							<th scope="col">Author</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-					<tfoot>
-						<tr>
-							<td colspan="4" class="text-end">最后编辑日期：2022.05.28</td>
-						</tr>
-					</tfoot>
-				</table>
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-sm-9">
+						<div class="content-left-box overflow-auto">
+							<table class="table table-hover table-success mb-0">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Title</th>
+										<th scope="col">SubmitTime</th>
+										<th scope="col">Author</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot>
+									<tr>
+										<td colspan="4" class="text-end">最后编辑日期：2022.05.28</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+					<div class="col-12 col-sm-3 ps-5">
+						<div class=" content-right-box infobox-visibility">
+							<a href=""><img src="../img/profile-photo.jpg" alt="头像" class="profile-photo" title="点击图片查看个人主页"/></a>
+							<div class="user-info">
+								<p>用户名：bbslzy</p>
+								<p>等级：24级</p>
+								<p>贡献值：1024</p>
+								<p>粉丝：3人</p>
+								<p>关注：10人</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+		<button type="button" class="content-add"><div class="content-add-text">+</div></button>
 		<script>
 			/* 利用数组模拟 */
 			var arr = new Array

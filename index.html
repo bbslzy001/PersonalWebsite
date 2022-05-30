@@ -16,19 +16,18 @@
 			*{margin:0; padding:0;}
 			/*设置全局字体样式*/
 			*{font-family: "微软雅黑";}
-			body
+			/*当小于992px时，隐藏导航栏左侧图标*/
+			@media (max-width: 576px)
 			{
-				background: url(img/index-background.jpg);
-				background-size: 100%;
-				background-repeat: repeat;
+				.brand-visibility{display: none;}
 			}
 			/*搜索框宽度*/
-			.naxbar-search-width
+			.navbar-search-width
 			{
 				width: 400px;
 			}
 			/*搜索按钮宽度*/
-			.naxbar-search-button-width
+			.navbar-search-button-width
 			{
 				width: 100px;
 			}
@@ -36,8 +35,9 @@
 			.item-font
 			{
 				font-size: 20px;
-				border-top: 2px solid #e7e3f8;
-				border-bottom: 2px solid #e7e3f8;
+				border-width: 2px 0;
+				border-color: rgba(0,0,0,0);
+				border-style: solid;
 			}
 			/*导航栏项目光标效果*/
 			.item-select a:hover
@@ -49,98 +49,115 @@
 			{
 				font-weight: bold;
 			}
+			/*顶部导航栏父盒子*/
 			.top-box
 			{
 				width: 100%;
+				background-image: url(img/top-box-background.png);
+				background-size: 100% 100%;
 			}
-			.empty-box
+			.top-first-box
 			{
 				width: 100%;
-				height: 60px;
+			}
+			.top-second-box
+			{
+				border-top: 2px solid darkgray;
 			}
 			.content-background
 			{
 				width: 100%;
 				margin:0 auto;
+
 			}
 			.content-box
 			{
-				width: 75%;
+				width: 80%;
 				height: 100%;
-				margin: 0 auto;
+				margin: 20px auto 0;
+			}
+			/*修改图片的边框*/
+			.img-thumbnail
+			{
+				padding: 0;
+				border: 6px outset dodgerblue;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="top-box">
-			<div class="empty-box"></div>
-			<!-- 设置导航栏字体颜色和背景颜色 -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-gradient fixed-top" style="background-color: #e7e3f8;">
-				<!-- 导航栏占比为屏幕100% -->
+			<div class="top-first-box">
+				<!-- 设置导航栏字体颜色和背景颜色 -->
+				<nav class="navbar navbar-expand-lg navbar-light bg-gradient" style="background-color: rgba(0,0,0,0);">
+					<!-- 导航栏占比为屏幕100% -->
+					<div class="container-fluid">
+						<!-- 网站名称 -->
+						<a class="navbar-brand brand-visibility">
+							<img src="img/icon01.png" alt="慵懒小窝图标" width="100" height="60">
+							<img src="img/icon02.png" alt="慵懒小窝艺术字" width="145" height="60">
+						</a>
+						<!-- 设置响应式，显示不全时改为下拉菜单 -->
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<!-- 用 collapse 包含要放到下拉菜单中的内容 -->
+						<div class="collapse navbar-collapse" id="navbar">
+							<!-- 栏目名称，左对齐，设置上下 margin 值 -->
+							<ul class="navbar-nav me-auto my-2">
+								<li class="nav-item item-select"><a class="nav-link item-font active ms-4" href="index.html">Home</a></li>
+								<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/algorithm.html">Algorithm</a></li>
+								<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/java.html">Java</a></li>
+								<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/mysql.html">Mysql</a></li>
+								<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/game.html">Game</a></li>
+								<!-- 导航栏中的下拉菜单 -->
+								<li class="nav-item dropdown">
+									<!-- 菜单名称 -->
+									<a class="nav-link dropdown-toggle item-font ms-4" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">其它</a>
+									<!-- 菜单内容 -->
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<li>
+											<!-- 通过在控制器元素上设置 data-bs-toggle 和 data-bs-target 来激活模态 -->
+											<!-- data-bs-toggle="modal" 用于打开模态框 -->
+											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registerModal">注册</a>
+										</li>
+										<li>
+											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">登录</a>
+										</li>
+										<!-- 分隔线 -->
+										<li><hr class="dropdown-divider"></li>
+										<li>
+											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoModal">作者信息</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<!-- 搜索框 -->
+							<form class="d-flex">
+								<!-- 设置格式，与右侧按钮间距为2rem，重新设置宽度 -->
+								<input class="form-control me-2 navbar-search-width" type="search" placeholder="请输入你想要搜索的内容" />
+								<!-- 设置格式，设置按钮颜色，重新设置宽度 -->
+								<button class="btn btn-outline-primary navbar-search-button-width" type="submit">搜索</button>
+							</form>
+						</div>
+					</div>
+				</nav>
+			</div>
+			<div class="top-second-box">
 				<div class="container-fluid">
-					<!-- 网站名称 -->
-					<a class="navbar-brand">
-						<img src="img/icon01.png" alt="慵懒小窝图标" width="100" height="60">
-						<img src="img/icon02.png" alt="慵懒小窝艺术字" width="145" height="60">
-					</a>
-					<!-- 设置响应式，显示不全时改为下拉菜单 -->
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<!-- 用 collapse 包含要放到下拉菜单中的内容 -->
-					<div class="collapse navbar-collapse" id="navbar">
-						<!-- 栏目名称，左对齐，设置上下 margin 值 -->
-						<ul class="navbar-nav me-auto my-2">
-							<li class="nav-item item-select"><a class="nav-link item-font active ms-4" href="index.html">Home</a></li>
-							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/algorithm.html">Algorithm</a></li>
-							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/java.html">Java</a></li>
-							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/mysql.html">Mysql</a></li>
-							<li class="nav-item item-select"><a class="nav-link item-font ms-4" href="html/game.html">Game</a></li>
-							<!-- 导航栏中的下拉菜单 -->
-							<li class="nav-item dropdown">
-								<!-- 菜单名称 -->
-								<a class="nav-link dropdown-toggle item-font ms-4" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">其它</a>
-								<!-- 菜单内容 -->
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li>
-										<!-- 通过在控制器元素上设置 data-bs-toggle 和 data-bs-target 来激活模态 -->
-										<!-- data-bs-toggle="modal" 用于打开模态框 -->
-										<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registerModal">注册</a>
-									</li>
-									<li>
-										<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">登录</a>
-									</li>
-									<!-- 分隔线 -->
-									<li><hr class="dropdown-divider"></li>
-									<li>
-										<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoModal">作者信息</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						<!-- 搜索框 -->
-						<form class="d-flex">
-							<!-- 设置格式，与右侧按钮间距为2rem，重新设置宽度 -->
-							<input class="form-control me-2 naxbar-search-width" type="search" placeholder="请输入你想要搜索的内容" />
-							<!-- 设置格式，设置按钮颜色，重新设置宽度 -->
-							<button class="btn btn-outline-primary naxbar-search-button-width" type="submit">搜索</button>
-						</form>
+					<div class="row">
+						<div class="col-3"></div>
+						<div class="col-6 text-center"><img src="img/title.png" alt="慵懒小窝艺术字" width="67%"></div>
+						<div class="col-3"></div>
 					</div>
 				</div>
-			</nav>
+			</div>
 		</div>
-		<script>
-			/*动态改变空盒子，避免悬空导航栏遮住 iframe 内容*/
-			/*height获取为content的高度，outerHeight获取的为content、border、padding的高度*/
-			$(".empty-box").height($(".navbar").outerHeight());
-		</script>
 		<!-- 注册模态框 -->
 		<!-- fade类，用于设置模态框弹出关闭效果 -->
 		<!-- data-bs-backdrop="static"，用于指定一个静态的背景，当用户点击模态框外部时不会关闭模态框 -->
 		<!-- data-bs-keyboard="false"，用于实现按下 escape 键时无法关闭模态框 -->
 		<!-- tabindex = 负值 (通常是 tabindex = "-1")，表示元素是可聚焦的，但是不能通过键盘导航来访问到该元素 -->
-		<!-- aria-hidden="true"，用于保持模态框不可见，直到触发器被激发 -->
-		<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<!-- 模态框头部 -->
@@ -205,7 +222,7 @@
 			</div>
 		</div>
 		<!-- 登录模态框 -->
-		<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<!-- 模态框头部 -->
@@ -242,7 +259,7 @@
 			</div>
 		</div>
 		<!-- 作者信息模态框 -->
-		<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<!-- 模态框头部 -->
