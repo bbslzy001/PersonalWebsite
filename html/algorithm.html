@@ -143,6 +143,7 @@
 			</nav>
 		</div>
 		<script>
+			/*在非主页的页面上，动态设置空盒子高度，避免页面内容被悬空导航栏遮住*/
 			$(".empty-box").height($(".navbar").outerHeight());
 		</script>
 		<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">

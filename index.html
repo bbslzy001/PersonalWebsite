@@ -16,7 +16,7 @@
 			*{margin:0; padding:0;}
 			/*设置全局字体样式*/
 			*{font-family: "微软雅黑";}
-			/*当小于992px时，隐藏导航栏左侧图标*/
+			/*当小于576px时，隐藏导航栏左侧图标*/
 			@media (max-width: 576px)
 			{
 				.brand-visibility{display: none;}
@@ -56,10 +56,12 @@
 				background-image: url(img/top-box-background.png);
 				background-size: 100% 100%;
 			}
+			/*放置导航栏的盒子*/
 			.top-first-box
 			{
 				width: 100%;
 			}
+			/*放置导航栏下方背景的盒子*/
 			.top-second-box
 			{
 				border-top: 2px solid darkgray;
@@ -85,14 +87,17 @@
 		</style>
 	</head>
 	<body>
+		<!-- 设置顶部大盒子 -->
 		<div class="top-box">
+			<!-- 设置导航栏 -->
 			<div class="top-first-box">
-				<!-- 设置导航栏字体颜色和背景颜色 -->
+				<!-- 设置该盒子为导航栏、设置当屏幕宽度大于lg的时候将其展开、设置导航栏字体颜色和背景颜色、设置盒子背景为透明 -->
 				<nav class="navbar navbar-expand-lg navbar-light bg-gradient" style="background-color: rgba(0,0,0,0);">
-					<!-- 导航栏占比为屏幕100% -->
+					<!-- 设置导航栏占比为屏幕100% -->
 					<div class="container-fluid">
-						<!-- 网站名称 -->
+						<!-- 设置网站图标、设置当宽度小于576px时隐藏导航栏上的网站图标 -->
 						<a class="navbar-brand brand-visibility">
+							<!-- 设置图片路径、设置替代文字、设置宽高 -->
 							<img src="img/icon01.png" alt="慵懒小窝图标" width="100" height="60">
 							<img src="img/icon02.png" alt="慵懒小窝艺术字" width="145" height="60">
 						</a>
@@ -121,30 +126,38 @@
 											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#registerModal">注册</a>
 										</li>
 										<li>
+											<!-- 通过在控制器元素上设置 data-bs-toggle 和 data-bs-target 来激活模态 -->
+											<!-- data-bs-toggle="modal" 用于打开模态框 -->
 											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#loginModal">登录</a>
 										</li>
 										<!-- 分隔线 -->
 										<li><hr class="dropdown-divider"></li>
 										<li>
+											<!-- 通过在控制器元素上设置 data-bs-toggle 和 data-bs-target 来激活模态 -->
+											<!-- data-bs-toggle="modal" 用于打开模态框 -->
 											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#infoModal">作者信息</a>
 										</li>
 									</ul>
 								</li>
 							</ul>
-							<!-- 搜索框 -->
+							<!-- 搜索框、设置flex布局 -->
 							<form class="d-flex">
-								<!-- 设置格式，与右侧按钮间距为2rem，重新设置宽度 -->
+								<!-- 设置格式，与右侧按钮间距为2rem，重新设置宽度，设置input标签的类型为search，设置文本框中的默认内容 -->
 								<input class="form-control me-2 navbar-search-width" type="search" placeholder="请输入你想要搜索的内容" />
-								<!-- 设置格式，设置按钮颜色，重新设置宽度 -->
+								<!-- 设置格式，设置按钮颜色，重新设置宽度，设置button标签的类型为submit -->
 								<button class="btn btn-outline-primary navbar-search-button-width" type="submit">搜索</button>
 							</form>
 						</div>
 					</div>
 				</nav>
 			</div>
+			<!-- 设置导航栏下方背景 -->
 			<div class="top-second-box">
+				<!-- 使用container栅格系统，设置该container的width为100% -->
 				<div class="container-fluid">
+					<!-- 设置一行 -->
 					<div class="row">
+						<!-- 将该行分为三部分，在中间部分添加图片 -->
 						<div class="col-3"></div>
 						<div class="col-6 text-center"><img src="img/title.png" alt="慵懒小窝艺术字" width="67%"></div>
 						<div class="col-3"></div>
